@@ -834,40 +834,33 @@
 
             async loadCommunityPosts() {
                 try {
-                    this.communityPosts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
+                    // Try to load from backend first
+                    await this.loadFromBackend();
                     
+                    // If no backend posts, load from localStorage
                     if (this.communityPosts.length === 0) {
-                        this.communityPosts = this.getSamplePosts();
+                        this.communityPosts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
                     }
                     
                     this.renderCommunityWall();
                 } catch (error) {
                     console.error('Failed to load community posts:', error);
+                    // Fallback to localStorage
+                    this.communityPosts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
                     this.renderCommunityWall();
                 }
             }
 
-            getSamplePosts() {
-                return [
-                    {
-                        id: '1',
-                        twitterUsername: 'aztecnetwork',
-                        aztecRole: 'Core Protocol Team',
-                        defineAztec: 'Aztec is pioneering the future of programmable privacy on Ethereum. We\'re building infrastructure that makes privacy the default, not an afterthought, enabling developers to create applications where user data remains confidential while still being verifiable.',
-                        loveAboutAztec: 'The revolutionary potential to bring true privacy to DeFi and beyond. We\'re not just building another L2 - we\'re fundamentally reimagining how blockchain applications can protect user privacy while maintaining the benefits of decentralization.',
-                        profileImage: 'https://unavatar.io/twitter/aztecnetwork',
-                        timestamp: new Date().toISOString()
-                    },
-                    {
-                        id: '2',
-                        twitterUsername: 'privacydev',
-                        aztecRole: 'Privacy Researcher & Developer',
-                        defineAztec: 'Aztec represents the evolution of blockchain technology towards true privacy preservation. It\'s a zero-knowledge rollup that enables private smart contracts, making advanced cryptography accessible to everyday developers.',
-                        loveAboutAztec: 'The elegant way it solves the privacy trilemma - achieving privacy, programmability, and scalability simultaneously. The developer experience is incredible, and the community is filled with brilliant minds pushing the boundaries of what\'s possible.',
-                        profileImage: 'https://unavatar.io/twitter/privacydev',
-                        timestamp: new Date(Date.now() - 3600000).toISOString()
-                    }
-                ];
+            async loadFromBackend() {
+                try {
+                    // Try to get community posts from your backend
+                    // You'll need to create this endpoint: GET /api/community/posts
+                    const result = await this.makeRequest('/community/posts');
+                    this.communityPosts = result.posts || [];
+                } catch (error) {
+                    console.log('Backend posts not available yet:', error.message);
+                    // Don't show error to user, just use localStorage
+                }
             }
 
             renderCommunityWall() {
