@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aztec Community Wall - The Next Renaissance</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◆</text></svg>">
+    <link rel="icon" href="./aztec-logo.jpg" type="image/jpeg">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -713,7 +713,8 @@
     <nav class="nav">
         <div class="nav-container">
             <a href="#" class="logo">
-                <img src="./aztec-logo.png" alt="Aztec Logo" style="width: 40px; height: 40px; border-radius: 8px;">
+                <img src="./aztec-logo.jpg" alt="Aztec Logo" style="width: 40px; height: 40px; border-radius: 8px; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="logo-symbol" style="display: none;">◆</div>
                 <div class="logo-text">AZTEC</div>
             </a>
             <div class="nav-links">
@@ -737,9 +738,8 @@
 
     <!-- Audio Element -->
     <audio id="backgroundMusic" loop>
-        <source src="https://www.soundjay.com/misc/sounds/magic-chime-02.wav" type="audio/wav">
-        <!-- Fallback ambient music -->
-        <source src="https://www.bensound.com/bensound-music/bensound-dreams.mp3" type="audio/mpeg">
+        <source src="./aztec%20music.mp3" type="audio/mpeg">
+        <source src="./aztec music.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Hero Section -->
