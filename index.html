@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aztec Community Wall</title>
+    <title>Aztec Community Wall - The Next Renaissance</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◆</text></svg>">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
@@ -12,85 +15,147 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background: #0a0a0a;
-            color: #ffffff;
-            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: #fff;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* Animated background */
-        .bg-animation {
+        /* Animated Background - Aztec Style */
+        .bg-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 40%, rgba(120, 219, 226, 0.15) 0%, transparent 50%);
-            animation: bgMove 20s ease-in-out infinite;
+            overflow: hidden;
         }
 
-        @keyframes bgMove {
-            0%, 100% { transform: translateX(0) translateY(0); }
-            25% { transform: translateX(-5px) translateY(-10px); }
-            50% { transform: translateX(10px) translateY(5px); }
-            75% { transform: translateX(-3px) translateY(8px); }
+        .bg-layer {
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            background: linear-gradient(45deg, 
+                #ff6b35 0%, 
+                #f7931e 15%, 
+                #ffd700 30%, 
+                #9d4edd 45%, 
+                #7209b7 60%, 
+                #480ca8 75%, 
+                #3730a3 90%, 
+                #1e3a8a 100%);
+            animation: bgRotate 20s linear infinite;
         }
 
-        /* Header Navigation */
-        .header {
-            background: rgba(0, 0, 0, 0.8);
+        .bg-layer:nth-child(2) {
+            background: radial-gradient(circle at 20% 80%, 
+                rgba(255, 107, 53, 0.8) 0%, 
+                rgba(157, 78, 221, 0.6) 50%, 
+                transparent 100%);
+            animation: bgFloat 15s ease-in-out infinite;
+        }
+
+        .bg-layer:nth-child(3) {
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.4) 0%, 
+                rgba(114, 9, 183, 0.3) 100%);
+            animation: bgPulse 25s ease-in-out infinite;
+        }
+
+        @keyframes bgRotate {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        @keyframes bgFloat {
+            0%, 100% { transform: translateX(-10px) translateY(-10px); }
+            25% { transform: translateX(10px) translateY(-20px); }
+            50% { transform: translateX(20px) translateY(10px); }
+            75% { transform: translateX(-5px) translateY(20px); }
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo-section {
+        .logo {
             display: flex;
             align-items: center;
             gap: 1rem;
+            text-decoration: none;
+            color: inherit;
         }
 
-        .aztec-logo {
+        .logo-symbol {
             width: 40px;
             height: 40px;
-            background: linear-gradient(45deg, #ffdd00, #ff8800);
-            border-radius: 8px;
+            background: linear-gradient(45deg, #ffd700, #ff6b35);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
-            font-weight: bold;
+            font-weight: 900;
             color: #000;
+            border-radius: 8px;
             animation: logoFloat 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-symbol::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s linear infinite;
         }
 
         @keyframes logoFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(5deg); }
         }
 
-        .brand-text {
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .logo-text {
             font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, #ffdd00, #ff8800);
+            font-weight: 800;
+            background: linear-gradient(45deg, #ffd700, #ff6b35, #9d4edd);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.02em;
         }
 
         .nav-links {
@@ -100,113 +165,184 @@
         }
 
         .nav-link {
-            color: #ffffff;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
+            font-weight: 500;
             padding: 0.5rem 1rem;
             border-radius: 8px;
             transition: all 0.3s ease;
-            font-weight: 500;
+            position: relative;
         }
 
         .nav-link:hover {
-            background: rgba(255, 221, 0, 0.1);
-            color: #ffdd00;
+            color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
             transform: translateY(-2px);
         }
 
         /* Hero Section */
         .hero {
+            margin-top: 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ffd700;
+            margin-bottom: 2rem;
+            animation: badgePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
         }
 
         .hero-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #ffffff, #ffdd00);
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #fff 0%, #ffd700 50%, #ff6b35 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: titleGlow 2s ease-in-out infinite alternate;
+            animation: titleGlow 4s ease-in-out infinite;
         }
 
         @keyframes titleGlow {
-            from { filter: drop-shadow(0 0 20px rgba(255, 221, 0, 0.3)); }
-            to { filter: drop-shadow(0 0 30px rgba(255, 221, 0, 0.6)); }
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3)); }
+            50% { filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.6)); }
         }
 
         .hero-subtitle {
-            font-size: 1.3rem;
-            color: #cccccc;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.8);
             margin-bottom: 1rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            font-style: italic;
         }
 
         .hero-description {
-            color: #999999;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
             max-width: 800px;
-            margin: 0 auto 2rem;
             line-height: 1.6;
+            margin-bottom: 3rem;
         }
 
-        .stats-container {
+        /* Audio Controls */
+        .audio-controls {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
             display: flex;
+            gap: 1rem;
+        }
+
+        .audio-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: #ffd700;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 3rem;
-            margin: 2rem 0;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            min-width: 150px;
-            animation: cardFloat 4s ease-in-out infinite;
         }
 
-        .stat-card:nth-child(2) { animation-delay: 1s; }
-        .stat-card:nth-child(3) { animation-delay: 2s; }
+        .audio-btn:hover {
+            background: rgba(255, 215, 0, 0.3);
+            transform: scale(1.1);
+        }
 
-        @keyframes cardFloat {
+        .audio-btn.playing {
+            background: rgba(255, 215, 0, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            gap: 3rem;
+            margin: 3rem 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            min-width: 150px;
+            animation: statFloat 6s ease-in-out infinite;
+        }
+
+        .stat:nth-child(2) { animation-delay: 1s; }
+        .stat:nth-child(3) { animation-delay: 2s; }
+
+        @keyframes statFloat {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-15px); }
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
-            color: #ffdd00;
+            background: linear-gradient(45deg, #ffd700, #ff6b35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 0.5rem;
         }
 
         .stat-label {
-            color: #cccccc;
             font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 600;
         }
 
         /* Form Section */
         .form-section {
             max-width: 600px;
-            margin: 3rem auto;
+            margin: 4rem auto;
             padding: 0 2rem;
         }
 
         .form-container {
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
+            border-radius: 30px;
             padding: 3rem;
             position: relative;
             overflow: hidden;
@@ -216,24 +352,27 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
+            left: -100%;
+            width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, #ffdd00, #ff8800, #ffdd00);
-            animation: shimmer 2s linear infinite;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+            animation: borderSweep 3s linear infinite;
         }
 
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        @keyframes borderSweep {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
         .form-title {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 800;
             text-align: center;
             margin-bottom: 2rem;
-            color: #ffffff;
+            background: linear-gradient(45deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .form-group {
@@ -243,7 +382,7 @@
         .form-group label {
             display: block;
             font-weight: 600;
-            color: #ffdd00;
+            color: #ffd700;
             margin-bottom: 0.8rem;
             font-size: 1.1rem;
         }
@@ -251,11 +390,11 @@
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 1rem 1.5rem;
+            padding: 1.2rem 1.5rem;
             background: rgba(0, 0, 0, 0.4);
             border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: #ffffff;
+            border-radius: 15px;
+            color: #fff;
             font-size: 1rem;
             transition: all 0.3s ease;
             font-family: inherit;
@@ -264,35 +403,36 @@
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #ffdd00;
-            box-shadow: 0 0 0 3px rgba(255, 221, 0, 0.1);
+            border-color: #ffd700;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
             background: rgba(0, 0, 0, 0.6);
         }
 
         .form-group textarea {
             resize: vertical;
-            min-height: 100px;
-            font-family: inherit;
+            min-height: 120px;
         }
 
         .submit-btn {
             width: 100%;
-            padding: 1.2rem 2rem;
-            background: linear-gradient(45deg, #ffdd00, #ff8800);
-            color: #000000;
+            padding: 1.5rem 2rem;
+            background: linear-gradient(45deg, #ffd700, #ff6b35);
+            color: #000;
             border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
+            border-radius: 15px;
+            font-size: 1.2rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
         }
 
         .submit-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 221, 0, 0.4);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.4);
         }
 
         .submit-btn:disabled {
@@ -301,10 +441,11 @@
             transform: none;
         }
 
+        /* Status Messages */
         .status-message {
             margin-top: 1.5rem;
             padding: 1rem 1.5rem;
-            border-radius: 12px;
+            border-radius: 15px;
             text-align: center;
             font-weight: 600;
         }
@@ -330,16 +471,16 @@
         /* Community Wall */
         .community-section {
             max-width: 1400px;
-            margin: 4rem auto;
+            margin: 6rem auto;
             padding: 0 2rem;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 5vw, 4rem);
             font-weight: 800;
-            margin-bottom: 3rem;
-            background: linear-gradient(45deg, #ffffff, #ffdd00);
+            margin-bottom: 4rem;
+            background: linear-gradient(45deg, #fff, #ffd700, #ff6b35);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -353,19 +494,42 @@
 
         .member-card {
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
+            border-radius: 25px;
+            padding: 2.5rem;
             position: relative;
-            transition: all 0.4s ease;
-            animation: memberCardIn 0.6s ease-out;
+            transition: all 0.5s ease;
+            animation: memberSlideIn 0.8s ease-out;
+            overflow: hidden;
         }
 
-        @keyframes memberCardIn {
+        .member-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd700, #ff6b35, #9d4edd);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .member-card:hover::before {
+            opacity: 1;
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        @keyframes memberSlideIn {
             from {
                 opacity: 0;
-                transform: translateY(30px) scale(0.95);
+                transform: translateY(50px) scale(0.9);
             }
             to {
                 opacity: 1;
@@ -373,66 +537,60 @@
             }
         }
 
-        .member-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(255, 221, 0, 0.2);
-            border-color: rgba(255, 221, 0, 0.3);
-        }
-
         .member-header {
             display: flex;
             align-items: center;
             gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .member-avatar {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            border: 3px solid #ffdd00;
+            border: 3px solid #ffd700;
             object-fit: cover;
-            animation: avatarPulse 3s ease-in-out infinite;
+            animation: avatarGlow 4s ease-in-out infinite;
         }
 
-        @keyframes avatarPulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 221, 0, 0.7); }
-            50% { box-shadow: 0 0 0 10px rgba(255, 221, 0, 0); }
+        @keyframes avatarGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+            50% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
         }
 
         .member-info h3 {
             font-size: 1.4rem;
             font-weight: 700;
-            color: #ffffff;
+            color: #fff;
             margin-bottom: 0.3rem;
         }
 
         .member-role {
-            color: #ffdd00;
+            color: #ffd700;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
 
         .member-content {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .content-section {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .content-label {
             font-size: 0.85rem;
-            color: #ffdd00;
+            color: #ffd700;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
 
         .content-text {
-            color: #cccccc;
-            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
             font-size: 0.95rem;
         }
 
@@ -440,12 +598,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 1rem;
+            padding-top: 1.5rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .join-date {
-            color: #999999;
+            color: rgba(255, 255, 255, 0.6);
             font-size: 0.85rem;
         }
 
@@ -466,31 +624,55 @@
             transform: scale(1.05);
         }
 
+        /* Floating Elements */
+        .floating-element {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10;
+            font-size: 2rem;
+            opacity: 0.1;
+            color: #ffd700;
+            animation: float 12s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.1;
+            }
+            90% {
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 4rem 2rem;
-            color: #666666;
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .empty-state h3 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             margin-bottom: 1rem;
-            color: #ffdd00;
-        }
-
-        .empty-state p {
-            font-size: 1.1rem;
-            color: #999999;
+            color: #ffd700;
         }
 
         .loading {
             text-align: center;
             padding: 3rem;
-            color: #ffdd00;
+            color: #ffd700;
             font-size: 1.2rem;
         }
 
-        /* Responsive Design */
+        /* Responsive */
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
@@ -501,11 +683,7 @@
                 gap: 1rem;
             }
 
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .stats-container {
+            .stats {
                 flex-direction: column;
                 gap: 1rem;
             }
@@ -518,75 +696,71 @@
                 padding: 2rem;
             }
         }
-
-        /* Floating particles animation */
-        .particle {
-            position: fixed;
-            pointer-events: none;
-            z-index: 1;
-            font-size: 1rem;
-            color: rgba(255, 221, 0, 0.3);
-            animation: float 8s linear infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-10vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="bg-animation"></div>
+    <!-- Animated Background -->
+    <div class="bg-container">
+        <div class="bg-layer"></div>
+        <div class="bg-layer"></div>
+        <div class="bg-layer"></div>
+    </div>
 
-    <!-- Header Navigation -->
-    <header class="header">
+    <!-- Navigation -->
+    <nav class="nav">
         <div class="nav-container">
-            <div class="logo-section">
-                <div class="aztec-logo">◆</div>
-                <div class="brand-text">AZTEC</div>
-            </div>
-            <nav class="nav-links">
+            <a href="#" class="logo">
+                <div class="logo-symbol">◆</div>
+                <div class="logo-text">AZTEC</div>
+            </a>
+            <div class="nav-links">
                 <a href="https://docs.aztec.network" class="nav-link" target="_blank">Docs</a>
                 <a href="https://github.com/AztecProtocol" class="nav-link" target="_blank">GitHub</a>
                 <a href="https://testnet.aztec.network" class="nav-link" target="_blank">Testnet</a>
-                <a href="https://aztec.network" class="nav-link" target="_blank">Website</a>
-            </nav>
+                <a href="https://aztec.network" class="nav-link" target="_blank">Network</a>
+            </div>
         </div>
-    </header>
+    </nav>
+
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <button class="audio-btn" id="playBtn" title="Play/Pause Music">
+            <span id="playIcon">▶</span>
+        </button>
+        <button class="audio-btn" id="volumeBtn" title="Volume">
+            <span id="volumeIcon">🔊</span>
+        </button>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.soundjay.com/misc/sounds/magic-chime-02.wav" type="audio/wav">
+        <!-- Fallback ambient music -->
+        <source src="https://www.bensound.com/bensound-music/bensound-dreams.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1 class="hero-title">Community Wall</h1>
-        <p class="hero-subtitle">Join the Aztec Privacy Revolution</p>
+        <div class="hero-badge">YOU ARE NOW ENTERING</div>
+        <h1 class="hero-title">The Next<br>Renaissance</h1>
+        <p class="hero-subtitle">Feast your eyes on</p>
         <p class="hero-description">
-            Share your role in the Aztec ecosystem and connect with fellow privacy advocates. 
-            Contribute to the decentralized future powered by programmable privacy.
+            Aztec is the blockchain that mastered the privacy problem.<br>
+            Join our community of privacy warriors and share your story.
         </p>
         
-        <div class="stats-container">
-            <div class="stat-card">
+        <div class="stats">
+            <div class="stat">
                 <div class="stat-number" id="member-count">0</div>
                 <div class="stat-label">Warriors</div>
             </div>
-            <div class="stat-card">
+            <div class="stat">
                 <div class="stat-number">100%</div>
                 <div class="stat-label">Private</div>
             </div>
-            <div class="stat-card">
+            <div class="stat">
                 <div class="stat-number">∞</div>
-                <div class="stat-label">Decentralized</div>
+                <div class="stat-label">Possibilities</div>
             </div>
         </div>
     </section>
@@ -594,7 +768,7 @@
     <!-- Form Section -->
     <section class="form-section">
         <div class="form-container">
-            <h2 class="form-title">Join the Community</h2>
+            <h2 class="form-title">Join the Revolution</h2>
             <form id="join-form">
                 <div class="form-group">
                     <label for="twitter-username">Twitter Username</label>
@@ -611,7 +785,7 @@
                     <input 
                         type="text" 
                         id="aztec-role" 
-                        placeholder="e.g., Developer, Validator, Community Member, Researcher..."
+                        placeholder="e.g., Developer, Validator, Community Member, Privacy Advocate..."
                         required
                     >
                 </div>
@@ -620,7 +794,7 @@
                     <label for="define-aztec">Define Aztec in Your Words</label>
                     <textarea 
                         id="define-aztec" 
-                        placeholder="How would you describe Aztec to someone new to the ecosystem?"
+                        placeholder="How would you describe Aztec to someone new to privacy technology?"
                         required
                     ></textarea>
                 </div>
@@ -629,13 +803,13 @@
                     <label for="love-aztec">Why Do You Love Aztec?</label>
                     <textarea 
                         id="love-aztec" 
-                        placeholder="What excites you most about Aztec's mission and technology?"
+                        placeholder="What excites you most about Aztec's mission and the future of privacy?"
                         required
                     ></textarea>
                 </div>
                 
                 <button type="submit" class="submit-btn" id="submit-btn">
-                    Join Community Wall
+                    Join the Renaissance
                 </button>
                 <div id="status" class="status-message" style="display: none;"></div>
             </form>
@@ -651,16 +825,19 @@
     </section>
 
     <script>
-        class CommunityWall {
+        class AztecCommunityWall {
             constructor() {
                 this.baseURL = 'https://aztecgame.duckdns.org/api';
                 this.members = [];
+                this.audio = document.getElementById('backgroundMusic');
+                this.isPlaying = false;
                 this.init();
-                this.startParticleAnimation();
+                this.startAnimations();
             }
 
             async init() {
                 this.setupEventListeners();
+                this.setupAudioControls();
                 await this.loadMembers();
                 this.updateStats();
             }
@@ -670,6 +847,38 @@
                     e.preventDefault();
                     this.addMember();
                 });
+            }
+
+            setupAudioControls() {
+                const playBtn = document.getElementById('playBtn');
+                const volumeBtn = document.getElementById('volumeBtn');
+                const playIcon = document.getElementById('playIcon');
+                const volumeIcon = document.getElementById('volumeIcon');
+                
+                playBtn.addEventListener('click', () => {
+                    if (this.isPlaying) {
+                        this.audio.pause();
+                        playIcon.textContent = '▶';
+                        playBtn.classList.remove('playing');
+                    } else {
+                        this.audio.play().catch(e => console.log('Audio play failed:', e));
+                        playIcon.textContent = '⏸';
+                        playBtn.classList.add('playing');
+                    }
+                    this.isPlaying = !this.isPlaying;
+                });
+
+                volumeBtn.addEventListener('click', () => {
+                    if (this.audio.muted) {
+                        this.audio.muted = false;
+                        volumeIcon.textContent = '🔊';
+                    } else {
+                        this.audio.muted = true;
+                        volumeIcon.textContent = '🔇';
+                    }
+                });
+
+                this.audio.volume = 0.3; // Set default volume
             }
 
             async loadMembers() {
@@ -707,8 +916,8 @@
                 const cleanUsername = username.replace('@', '');
 
                 submitBtn.disabled = true;
-                submitBtn.textContent = 'Adding to wall...';
-                this.showStatus('Verifying Twitter username and adding to wall...', 'info');
+                submitBtn.textContent = 'Joining the Renaissance...';
+                this.showStatus('Verifying Twitter username and adding to the community...', 'info');
 
                 try {
                     const response = await fetch(`${this.baseURL}/wall/add-member`, {
@@ -727,28 +936,29 @@
                     const data = await response.json();
 
                     if (response.ok && data.success) {
-                        this.showStatus(data.message, 'success');
+                        this.showStatus(data.message + ' Welcome to the Renaissance!', 'success');
                         document.getElementById('join-form').reset();
                         
                         await this.loadMembers();
                         this.updateStats();
+                        this.celebrateNewMember();
                     } else {
                         throw new Error(data.error || 'Failed to add member to wall');
                     }
                 } catch (error) {
                     console.error('Error adding member:', error);
                     if (error.message.includes('already on the community wall')) {
-                        this.showStatus('You are already on the community wall!', 'error');
+                        this.showStatus('You are already part of the Renaissance!', 'error');
                     } else if (error.message.includes('API limit reached') || error.message.includes('429')) {
-                        this.showStatus('Twitter API limit reached. Please try again later.', 'error');
+                        this.showStatus('Twitter verification temporarily unavailable. Please try again later.', 'error');
                     } else if (error.message.includes('not found')) {
                         this.showStatus('Twitter username not found. Please check the spelling.', 'error');
                     } else {
-                        this.showStatus(error.message || 'Failed to add member. Please try again.', 'error');
+                        this.showStatus(error.message || 'Failed to join. Please try again.', 'error');
                     }
                 } finally {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Join Community Wall';
+                    submitBtn.textContent = 'Join the Renaissance';
                 }
             }
 
@@ -758,25 +968,25 @@
                 if (this.members.length === 0) {
                     grid.innerHTML = `
                         <div class="empty-state">
-                            <h3>No community members yet</h3>
-                            <p>Be the first to join the Aztec community wall and share your story!</p>
+                            <h3>No Warriors Yet</h3>
+                            <p>Be the first to join the Aztec Renaissance and share your vision of privacy!</p>
                         </div>
                     `;
                     return;
                 }
 
-                grid.innerHTML = this.members.map(member => `
-                    <div class="member-card">
+                grid.innerHTML = this.members.map((member, index) => `
+                    <div class="member-card" style="animation-delay: ${index * 0.1}s">
                         <div class="member-header">
                             <img 
                                 src="${member.profileImage}" 
                                 alt="${member.twitterUsername}" 
                                 class="member-avatar"
-                                onerror="this.src='https://via.placeholder.com/80x80/ffdd00/000000?text=${member.twitterUsername.charAt(0).toUpperCase()}'"
+                                onerror="this.src='https://via.placeholder.com/80x80/ffd700/000000?text=${member.twitterUsername.charAt(0).toUpperCase()}'"
                             >
                             <div class="member-info">
                                 <h3>@${member.twitterUsername}</h3>
-                                <div class="member-role">${member.role || 'Aztec Warrior'}</div>
+                                <div class="member-role">${member.role || 'Privacy Warrior'}</div>
                             </div>
                         </div>
                         
@@ -807,7 +1017,7 @@
             }
 
             async removeMember(memberId) {
-                if (confirm('Are you sure you want to remove this member?')) {
+                if (confirm('Are you sure you want to remove this privacy warrior?')) {
                     try {
                         const response = await fetch(`${this.baseURL}/wall/members/${memberId}`, {
                             method: 'DELETE'
@@ -816,7 +1026,7 @@
                         const data = await response.json();
                         
                         if (response.ok && data.success) {
-                            this.showStatus('Member removed successfully', 'success');
+                            this.showStatus('Member removed from the Renaissance', 'success');
                             await this.loadMembers();
                             this.updateStats();
                         } else {
@@ -842,7 +1052,7 @@
                 if (type === 'success') {
                     setTimeout(() => {
                         statusDiv.style.display = 'none';
-                    }, 3000);
+                    }, 4000);
                 }
             }
 
@@ -855,27 +1065,72 @@
                 });
             }
 
-            startParticleAnimation() {
-                const symbols = ['◆', '▲', '●', '■', '♦', '▼'];
-                
-                setInterval(() => {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
-                    
-                    document.body.appendChild(particle);
-                    
+            celebrateNewMember() {
+                // Create celebration particles
+                for (let i = 0; i < 20; i++) {
                     setTimeout(() => {
-                        particle.remove();
-                    }, 8000);
-                }, 2000);
+                        this.createCelebrationParticle();
+                    }, i * 100);
+                }
+            }
+
+            createCelebrationParticle() {
+                const particle = document.createElement('div');
+                particle.style.position = 'fixed';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = '100%';
+                particle.style.color = ['#ffd700', '#ff6b35', '#9d4edd'][Math.floor(Math.random() * 3)];
+                particle.style.fontSize = '2rem';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '1000';
+                particle.textContent = ['✨', '🎉', '🌟', '💫', '⭐'][Math.floor(Math.random() * 5)];
+                
+                document.body.appendChild(particle);
+                
+                const animation = particle.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(-100vh) rotate(360deg)`, opacity: 0 }
+                ], {
+                    duration: 3000,
+                    easing: 'ease-out'
+                });
+                
+                animation.onfinish = () => particle.remove();
+            }
+
+            startAnimations() {
+                // Floating elements
+                setInterval(() => {
+                    this.createFloatingElement();
+                }, 3000);
+                
+                // Background music auto-play attempt (will require user interaction)
+                document.addEventListener('click', () => {
+                    if (!this.isPlaying) {
+                        this.audio.play().catch(e => console.log('Auto-play prevented:', e));
+                    }
+                }, { once: true });
+            }
+
+            createFloatingElement() {
+                const symbols = ['◆', '▲', '●', '■', '♦', '▼', '⬟', '⬢'];
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                element.style.left = Math.random() * 100 + '%';
+                element.style.animationDuration = (Math.random() * 8 + 8) + 's';
+                element.style.fontSize = Math.random() * 2 + 1 + 'rem';
+                
+                document.body.appendChild(element);
+                
+                setTimeout(() => {
+                    element.remove();
+                }, 12000);
             }
         }
 
-        // Initialize the community wall
-        const communityWall = new CommunityWall();
+        // Initialize the Aztec Community Wall
+        const communityWall = new AztecCommunityWall();
     </script>
 </body>
 </html>
