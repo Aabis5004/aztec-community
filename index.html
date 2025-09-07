@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aztec Community Arena</title>
+    <title>Aztec Community Wall</title>
     <style>
         * {
             margin: 0;
@@ -12,110 +12,274 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: white;
-            overflow-x: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2d2d2d 100%);
+            color: #ffffff;
+            min-height: 100vh;
         }
 
         .header {
             background: rgba(0, 0, 0, 0.9);
-            padding: 1rem 2rem;
+            padding: 1.5rem 2rem;
+            border-bottom: 2px solid #D2691E;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #FFD700;
         }
 
         .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #FFD700;
-            text-shadow: 0 0 10px #FFD700;
-        }
-
-        .community-counter {
-            background: rgba(255, 215, 0, 0.2);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            border: 1px solid #FFD700;
-        }
-
-        .login-screen {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle at center, #2d2d2d 0%, #1a1a1a 100%);
-        }
-
-        .login-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 3rem;
-            border-radius: 20px;
-            text-align: center;
-            border: 2px solid #FFD700;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-            max-width: 500px;
-            width: 90%;
-        }
-
-        .login-card h1 {
             font-size: 2.5rem;
+            font-weight: 900;
+            color: #D2691E;
+            text-shadow: 0 0 20px rgba(210, 105, 30, 0.5);
+        }
+
+        .community-stats {
+            display: flex;
+            gap: 2rem;
+            color: #cccccc;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #D2691E;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .intro-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(210, 105, 30, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(210, 105, 30, 0.3);
+        }
+
+        .intro-section h1 {
+            font-size: 3rem;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #FFD700, #FFA500);
+            background: linear-gradient(45deg, #D2691E, #FF8C00);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .twitter-input {
+        .intro-section p {
+            font-size: 1.2rem;
+            color: #cccccc;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .join-button {
+            background: linear-gradient(45deg, #D2691E, #FF8C00);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .join-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(210, 105, 30, 0.4);
+        }
+
+        .submission-form {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #D2691E;
+            font-weight: 600;
+        }
+
+        .form-input {
             width: 100%;
             padding: 1rem;
-            margin: 1rem 0;
-            border: 2px solid #FFD700;
+            border: 2px solid rgba(210, 105, 30, 0.3);
             border-radius: 10px;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.3);
             color: white;
-            font-size: 1.1rem;
-            text-align: center;
+            font-size: 1rem;
+            transition: all 0.3s;
         }
 
-        .twitter-input::placeholder {
-            color: #ccc;
+        .form-input:focus {
+            outline: none;
+            border-color: #D2691E;
+            box-shadow: 0 0 10px rgba(210, 105, 30, 0.3);
         }
 
-        .enter-btn {
-            background: linear-gradient(45deg, #FFD700, #FFA500);
-            color: #1a1a1a;
+        .form-input::placeholder {
+            color: #888;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #D2691E, #FF8C00);
+            color: white;
             border: none;
             padding: 1rem 2rem;
             border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
             cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
             transition: all 0.3s;
             width: 100%;
-            margin-top: 1rem;
         }
 
-        .enter-btn:hover {
+        .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            box-shadow: 0 8px 25px rgba(210, 105, 30, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .wall-container {
+            margin-top: 3rem;
+        }
+
+        .wall-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .wall-header h2 {
+            font-size: 2.5rem;
+            color: #D2691E;
+            margin-bottom: 0.5rem;
+        }
+
+        .wall-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .community-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(210, 105, 30, 0.2);
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .community-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(210, 105, 30, 0.2);
+            border-color: rgba(210, 105, 30, 0.5);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #D2691E;
+            object-fit: cover;
+        }
+
+        .user-info h3 {
+            color: #D2691E;
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .user-info .role {
+            color: #FF8C00;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .card-content {
+            line-height: 1.6;
+        }
+
+        .question-block {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border-left: 4px solid #D2691E;
+        }
+
+        .question {
+            font-size: 0.9rem;
+            color: #D2691E;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .answer {
+            color: #ffffff;
+            font-size: 0.95rem;
+        }
+
+        .card-footer {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8rem;
+            color: #888;
+            text-align: right;
         }
 
         .status-message {
-            margin-top: 1rem;
             padding: 1rem;
             border-radius: 10px;
-            font-weight: bold;
-        }
-
-        .status-message.error {
-            background: rgba(220, 53, 69, 0.2);
-            border: 1px solid #dc3545;
-            color: #ff6b7a;
+            margin: 1rem 0;
+            font-weight: 600;
         }
 
         .status-message.success {
@@ -124,322 +288,48 @@
             color: #6bcf7f;
         }
 
+        .status-message.error {
+            background: rgba(220, 53, 69, 0.2);
+            border: 1px solid #dc3545;
+            color: #ff6b7a;
+        }
+
         .status-message.info {
             background: rgba(23, 162, 184, 0.2);
             border: 1px solid #17a2b8;
             color: #5bc0de;
         }
 
-        .game-arena {
-            min-height: calc(100vh - 80px);
-            background: linear-gradient(to bottom, 
-                #87CEEB 0%, 
-                #87CEEB 30%, 
-                #90EE90 30%, 
-                #90EE90 70%, 
-                #8B4513 70%, 
-                #8B4513 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .player-profile {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 1rem;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            border: 2px solid #FFD700;
-            min-width: 300px;
-        }
-
-        .profile-pic {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 3px solid #FFD700;
-            object-fit: cover;
-        }
-
-        .player-info h3 {
-            color: #FFD700;
-            margin-bottom: 0.5rem;
-        }
-
-        .player-stats {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 1rem;
-            border-radius: 15px;
-            border: 2px solid #FFD700;
-            min-width: 250px;
-        }
-
-        .stat-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 0.5rem;
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #FFD700;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: #ccc;
-        }
-
-        .game-character {
-            position: absolute;
-            width: 80px;
-            height: 100px;
-            left: 50%;
-            bottom: 200px;
-            transform: translateX(-50%);
-            background: linear-gradient(45deg, #FFD700, #FFA500);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            border: 3px solid #FF8C00;
-            animation: float 3s ease-in-out infinite;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .game-character:hover {
-            transform: translateX(-50%) scale(1.1);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateX(-50%) translateY(0px); }
-            50% { transform: translateX(-50%) translateY(-20px); }
-        }
-
-        .action-panel {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 1rem;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 1.5rem;
-            border-radius: 20px;
-            border: 2px solid #FFD700;
-        }
-
-        .action-btn {
-            padding: 1rem 1.5rem;
-            border: none;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1rem;
-            min-width: 150px;
-        }
-
-        .verify-btn {
-            background: linear-gradient(45deg, #32CD32, #228B22);
-            color: white;
-        }
-
-        .propose-btn {
-            background: linear-gradient(45deg, #1E90FF, #0000CD);
-            color: white;
-        }
-
-        .leaderboard-btn {
-            background: linear-gradient(45deg, #FF6347, #DC143C);
-            color: white;
-        }
-
-        .action-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .action-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .floating-points {
-            position: absolute;
-            color: #FFD700;
-            font-weight: bold;
-            font-size: 1.5rem;
-            pointer-events: none;
-            animation: floatUp 2s ease-out forwards;
-        }
-
-        @keyframes floatUp {
-            from {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateY(-100px);
-            }
-        }
-
-        .game-messages {
-            position: absolute;
-            bottom: 150px;
-            left: 20px;
-            right: 20px;
-            max-height: 150px;
-            overflow-y: auto;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            padding: 1rem;
-        }
-
-        .message {
-            padding: 0.5rem;
-            margin: 0.3rem 0;
-            border-radius: 5px;
-            animation: slideIn 0.5s ease-out;
-        }
-
-        .message.success {
-            background: rgba(40, 167, 69, 0.3);
-            border-left: 4px solid #28a745;
-        }
-
-        .message.error {
-            background: rgba(220, 53, 69, 0.3);
-            border-left: 4px solid #dc3545;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .leaderboard-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .leaderboard-content {
-            background: rgba(26, 26, 26, 0.95);
-            padding: 2rem;
-            border-radius: 20px;
-            border: 2px solid #FFD700;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .leaderboard-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        .leaderboard-table th,
-        .leaderboard-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #333;
-        }
-
-        .leaderboard-table th {
-            background: rgba(255, 215, 0, 0.2);
-            color: #FFD700;
-        }
-
         .hidden {
             display: none !important;
         }
 
-        .background-effects {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #FFD700;
-            border-radius: 50%;
-            animation: particleFloat 5s linear infinite;
-        }
-
-        @keyframes particleFloat {
-            0% {
-                opacity: 1;
-                transform: translateY(100vh) rotate(0deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-10vh) rotate(360deg);
-            }
-        }
-
-        .running-npc {
-            position: absolute;
-            font-size: 2rem;
-            animation: runAcross 8s linear infinite;
-            bottom: 150px;
-        }
-
-        @keyframes runAcross {
-            0% { left: -50px; }
-            100% { left: 100vw; }
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
         }
 
         @media (max-width: 768px) {
-            .action-panel {
+            .header-content {
                 flex-direction: column;
-                width: 90%;
+                gap: 1rem;
             }
-            
-            .player-profile,
-            .player-stats {
-                position: relative;
-                margin: 1rem;
-                width: auto;
+
+            .community-stats {
+                gap: 1rem;
             }
-            
-            .game-arena {
-                padding-top: 2rem;
+
+            .intro-section h1 {
+                font-size: 2rem;
+            }
+
+            .wall-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-container {
+                padding: 1rem;
             }
         }
     </style>
@@ -447,441 +337,317 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <div class="logo">AZTEC ARENA</div>
-        <div class="community-counter">
-            <span>Community Warriors: <span id="warrior-count">0</span></span>
+        <div class="header-content">
+            <div class="logo">AZTEC COMMUNITY</div>
+            <div class="community-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="total-members">0</div>
+                    <div>Members</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="total-posts">0</div>
+                    <div>Stories</div>
+                </div>
+            </div>
         </div>
     </header>
 
-    <!-- Login Screen -->
-    <div id="login-screen" class="login-screen">
-        <div class="login-card">
-            <h1>🏺 Join the Aztec Arena</h1>
-            <p>Enter your Twitter username to join the privacy warriors!</p>
-            <input type="text" id="twitter-username" class="twitter-input" placeholder="Twitter username (without @)">
-            <button id="enter-arena-btn" class="enter-btn">⚔️ Enter Arena</button>
-            <div id="login-status"></div>
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Intro Section -->
+        <div class="intro-section">
+            <h1>Share Your Aztec Story</h1>
+            <p>
+                Join the Aztec community wall! Share your journey, thoughts, and passion for privacy-preserving technology. 
+                Connect with fellow builders, researchers, and privacy advocates from around the world.
+            </p>
+            <button class="join-button" onclick="scrollToForm()">Share Your Story</button>
         </div>
-    </div>
 
-    <!-- Game Arena -->
-    <div id="game-arena" class="game-arena hidden">
-        <!-- Background Effects -->
-        <div class="background-effects" id="background-effects"></div>
+        <!-- Submission Form -->
+        <div id="submission-form" class="submission-form">
+            <h2 style="color: #D2691E; margin-bottom: 1.5rem; text-align: center;">Add Your Story to the Wall</h2>
+            
+            <form id="community-form">
+                <div class="form-group">
+                    <label for="twitter-username">Twitter Username (without @)</label>
+                    <input type="text" id="twitter-username" class="form-input" placeholder="Enter your Twitter username" required>
+                </div>
 
-        <!-- Player Profile -->
-        <div class="player-profile">
-            <img id="player-avatar" class="profile-pic" src="" alt="Avatar">
-            <div class="player-info">
-                <h3 id="player-name">Warrior</h3>
-                <p>Privacy Advocate</p>
+                <div class="form-group">
+                    <label for="aztec-role">Your Highest Role in Aztec</label>
+                    <select id="aztec-role" class="form-input" required>
+                        <option value="">Select your role</option>
+                        <option value="Core Developer">Core Developer</option>
+                        <option value="Researcher">Researcher</option>
+                        <option value="Community Member">Community Member</option>
+                        <option value="Builder">Builder</option>
+                        <option value="Contributor">Contributor</option>
+                        <option value="Validator">Validator</option>
+                        <option value="Privacy Advocate">Privacy Advocate</option>
+                        <option value="Student/Learning">Student/Learning</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="define-aztec">Define Aztec in your words</label>
+                    <textarea id="define-aztec" class="form-input form-textarea" placeholder="How would you explain Aztec to someone new? What makes it special?" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="love-about-aztec">What do you love most about Aztec?</label>
+                    <textarea id="love-about-aztec" class="form-input form-textarea" placeholder="Share what excites you most about Aztec's technology, community, or vision" required></textarea>
+                </div>
+
+                <button type="submit" id="submit-btn" class="submit-btn">Add to Community Wall</button>
+            </form>
+
+            <div id="form-status"></div>
+        </div>
+
+        <!-- Community Wall -->
+        <div class="wall-container">
+            <div class="wall-header">
+                <h2>Community Wall</h2>
+                <p style="color: #888;">Stories from our amazing community members</p>
             </div>
-        </div>
 
-        <!-- Player Stats -->
-        <div class="player-stats">
-            <h3 style="color: #FFD700; text-align: center;">Arena Stats</h3>
-            <div class="stat-grid">
-                <div class="stat-item">
-                    <div class="stat-value" id="score-display">0</div>
-                    <div class="stat-label">Score</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="honk-points">0</div>
-                    <div class="stat-label">Honk Points</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="verifications">0</div>
-                    <div class="stat-label">Verifications</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="proposals">0</div>
-                    <div class="stat-label">Proposals</div>
-                </div>
+            <div id="wall-grid" class="wall-grid">
+                <div class="loading">Loading community stories...</div>
             </div>
-        </div>
-
-        <!-- Game Character -->
-        <div class="game-character" id="game-character" title="Click me for bonus points!">
-            🛡️
-        </div>
-
-        <!-- Action Panel -->
-        <div class="action-panel">
-            <button id="verify-attestation" class="action-btn verify-btn">
-                ⚡ Verify Attestation
-            </button>
-            <button id="submit-proposal" class="action-btn propose-btn">
-                📜 Submit Proposal
-            </button>
-            <button id="view-leaderboard" class="action-btn leaderboard-btn">
-                🏆 Leaderboard
-            </button>
-        </div>
-
-        <!-- Game Messages -->
-        <div class="game-messages" id="game-messages"></div>
-    </div>
-
-    <!-- Leaderboard Modal -->
-    <div id="leaderboard-modal" class="leaderboard-modal hidden">
-        <div class="leaderboard-content">
-            <h2 style="color: #FFD700; text-align: center;">🏆 Arena Leaderboard</h2>
-            <div id="leaderboard-content"></div>
-            <button onclick="closeLeaderboard()" class="enter-btn" style="margin-top: 1rem;">Close</button>
         </div>
     </div>
 
     <script>
-        class AztecArenaGame {
+        class AztecCommunityWall {
             constructor() {
                 this.apiURL = 'https://aztecgame.duckdns.org/api';
-                this.token = localStorage.getItem('aztec-game-token');
-                this.currentUser = null;
-                this.cooldowns = {};
-                this.warriorCount = 0;
-                
+                this.communityPosts = [];
                 this.init();
             }
-            
+
             async init() {
-                // Check if user is already logged in
-                if (this.token) {
-                    try {
-                        await this.loadUserProfile();
-                        this.showArena();
-                    } catch (error) {
-                        this.showLogin();
-                        this.clearToken();
-                    }
-                } else {
-                    this.showLogin();
-                }
-                
                 this.bindEvents();
-                this.startBackgroundEffects();
-                this.updateWarriorCount();
+                await this.loadCommunityPosts();
+                this.updateStats();
             }
-            
+
             bindEvents() {
-                document.getElementById('enter-arena-btn').addEventListener('click', () => this.handleLogin());
-                document.getElementById('twitter-username').addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') this.handleLogin();
+                document.getElementById('community-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleSubmission();
                 });
-                
-                document.getElementById('verify-attestation').addEventListener('click', () => this.verifyAttestation());
-                document.getElementById('submit-proposal').addEventListener('click', () => this.submitProposal());
-                document.getElementById('view-leaderboard').addEventListener('click', () => this.showLeaderboard());
-                document.getElementById('game-character').addEventListener('click', () => this.characterClick());
             }
-            
-            async handleLogin() {
-                let username = document.getElementById('twitter-username').value.trim();
+
+            async handleSubmission() {
+                const submitBtn = document.getElementById('submit-btn');
+                const formData = this.getFormData();
                 
-                // Remove @ if present
-                if (username.startsWith('@')) {
-                    username = username.substring(1);
+                if (!this.validateForm(formData)) return;
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Submitting...';
+
+                try {
+                    this.showStatus('Verifying Twitter username...', 'info');
+                    
+                    // First verify Twitter username
+                    const userResult = await this.verifyTwitterUser(formData.twitterUsername);
+                    
+                    if (userResult.success) {
+                        this.showStatus('Creating your community post...', 'info');
+                        
+                        // Create community post
+                        const postData = {
+                            ...formData,
+                            profileImage: userResult.user.profileImage || `https://unavatar.io/twitter/${formData.twitterUsername}`,
+                            timestamp: new Date().toISOString()
+                        };
+
+                        await this.saveCommunityPost(postData);
+                        
+                        this.showStatus('Successfully added to community wall!', 'success');
+                        this.clearForm();
+                        await this.loadCommunityPosts();
+                        this.updateStats();
+                        
+                        // Scroll to wall
+                        setTimeout(() => {
+                            document.querySelector('.wall-container').scrollIntoView({ 
+                                behavior: 'smooth' 
+                            });
+                        }, 1000);
+                    }
+                } catch (error) {
+                    this.showStatus(`Error: ${error.message}`, 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Add to Community Wall';
                 }
+            }
+
+            getFormData() {
+                return {
+                    twitterUsername: document.getElementById('twitter-username').value.trim().replace('@', ''),
+                    aztecRole: document.getElementById('aztec-role').value,
+                    defineAztec: document.getElementById('define-aztec').value.trim(),
+                    loveAboutAztec: document.getElementById('love-about-aztec').value.trim()
+                };
+            }
+
+            validateForm(data) {
+                if (!data.twitterUsername) {
+                    this.showStatus('Please enter your Twitter username', 'error');
+                    return false;
+                }
+                if (!data.aztecRole) {
+                    this.showStatus('Please select your role', 'error');
+                    return false;
+                }
+                if (!data.defineAztec || data.defineAztec.length < 20) {
+                    this.showStatus('Please provide a more detailed definition of Aztec (at least 20 characters)', 'error');
+                    return false;
+                }
+                if (!data.loveAboutAztec || data.loveAboutAztec.length < 20) {
+                    this.showStatus('Please share more about what you love about Aztec (at least 20 characters)', 'error');
+                    return false;
+                }
+                return true;
+            }
+
+            async verifyTwitterUser(username) {
+                const response = await fetch(`${this.apiURL}/twitter/verify-username`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username })
+                });
+
+                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to verify Twitter username');
+                }
+                return result;
+            }
+
+            async saveCommunityPost(postData) {
+                // Since we don't have a specific community endpoint, we'll simulate saving
+                // In a real implementation, you'd create a new endpoint for community posts
+                console.log('Saving community post:', postData);
                 
-                if (!username) {
-                    this.showStatus('Please enter your Twitter username!', 'error');
+                // For now, we'll store in localStorage and simulate API call
+                const existingPosts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
+                existingPosts.unshift(postData);
+                localStorage.setItem('communityPosts', JSON.stringify(existingPosts));
+                
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+
+            async loadCommunityPosts() {
+                try {
+                    // Load from localStorage for now
+                    this.communityPosts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
+                    
+                    // Add some sample posts if none exist
+                    if (this.communityPosts.length === 0) {
+                        this.communityPosts = this.getSamplePosts();
+                    }
+                    
+                    this.renderCommunityWall();
+                } catch (error) {
+                    console.error('Failed to load community posts:', error);
+                    this.renderCommunityWall();
+                }
+            }
+
+            getSamplePosts() {
+                return [
+                    {
+                        twitterUsername: 'aztecnetwork',
+                        aztecRole: 'Core Developer',
+                        defineAztec: 'Aztec is the future of private smart contracts on Ethereum. We\'re building a privacy-first zkEVM that allows developers to build confidential applications without compromising on programmability.',
+                        loveAboutAztec: 'The potential to bring true privacy to DeFi and beyond. We\'re not just building privacy - we\'re building the foundation for a new internet where privacy is the default, not an afterthought.',
+                        profileImage: 'https://unavatar.io/twitter/aztecnetwork',
+                        timestamp: new Date().toISOString()
+                    },
+                    {
+                        twitterUsername: 'privacy_advocate',
+                        aztecRole: 'Privacy Advocate',
+                        defineAztec: 'Aztec represents the democratization of privacy technology. It\'s making zero-knowledge proofs accessible to every developer, not just cryptography experts.',
+                        loveAboutAztec: 'The community! Everyone here shares a vision of a more private, equitable digital future. The technical innovation is incredible, but the human element is what makes this special.',
+                        profileImage: 'https://unavatar.io/twitter/privacy_advocate',
+                        timestamp: new Date(Date.now() - 3600000).toISOString()
+                    }
+                ];
+            }
+
+            renderCommunityWall() {
+                const wallGrid = document.getElementById('wall-grid');
+                
+                if (this.communityPosts.length === 0) {
+                    wallGrid.innerHTML = '<div class="loading">No community posts yet. Be the first to share your story!</div>';
                     return;
                 }
-                
-                const btn = document.getElementById('enter-arena-btn');
-                btn.disabled = true;
-                btn.textContent = '🔄 Connecting...';
-                
-                try {
-                    this.showStatus('🔗 Testing connection...', 'info');
-                    await this.testConnection();
-                    
-                    this.showStatus('🐦 Verifying Twitter username...', 'info');
-                    const result = await this.verifyTwitterUsername(username);
-                    
-                    if (result.success) {
-                        this.token = result.token;
-                        this.currentUser = result.user;
-                        localStorage.setItem('aztec-game-token', this.token);
-                        
-                        this.showStatus('✅ Welcome to the Arena!', 'success');
-                        
-                        setTimeout(() => {
-                            this.showArena();
-                            this.updateDisplay();
-                        }, 1500);
-                    }
-                } catch (error) {
-                    this.showStatus(`❌ ${error.message}`, 'error');
-                } finally {
-                    btn.disabled = false;
-                    btn.textContent = '⚔️ Enter Arena';
-                }
+
+                wallGrid.innerHTML = this.communityPosts.map(post => `
+                    <div class="community-card">
+                        <div class="card-header">
+                            <img src="${post.profileImage}" alt="${post.twitterUsername}" class="profile-pic"
+                                 onerror="this.src='data:image/svg+xml,<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"60\\" height=\\"60\\"><circle cx=\\"30\\" cy=\\"30\\" r=\\"30\\" fill=\\"%23D2691E\\"/><text x=\\"30\\" y=\\"35\\" text-anchor=\\"middle\\" fill=\\"white\\" font-size=\\"20\\">${post.twitterUsername[0].toUpperCase()}</text></svg>'">
+                            <div class="user-info">
+                                <h3>@${post.twitterUsername}</h3>
+                                <div class="role">${post.aztecRole}</div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="question-block">
+                                <div class="question">How do you define Aztec?</div>
+                                <div class="answer">${post.defineAztec}</div>
+                            </div>
+                            <div class="question-block">
+                                <div class="question">What do you love most about Aztec?</div>
+                                <div class="answer">${post.loveAboutAztec}</div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            ${new Date(post.timestamp).toLocaleDateString()} at ${new Date(post.timestamp).toLocaleTimeString()}
+                        </div>
+                    </div>
+                `).join('');
             }
-            
-            async verifyAttestation() {
-                if (!this.canPerformAction('verification', 3000)) return;
-                
-                const btn = document.getElementById('verify-attestation');
-                btn.disabled = true;
-                btn.textContent = '⚡ Verifying...';
-                
-                try {
-                    const result = await this.makeRequest('/game/verify-attestation', 'POST', {
-                        attestationData: 'arena-verification-' + Date.now()
-                    });
-                    
-                    this.currentUser.gameStats = result.newStats;
-                    this.addMessage(result.message, result.success ? 'success' : 'error');
-                    this.updateDisplay();
-                    this.showFloatingPoints(result.pointsChange);
-                    
-                    if (result.success) {
-                        this.createParticleEffect();
-                    }
-                    
-                } catch (error) {
-                    this.addMessage(`❌ Verification failed: ${error.message}`, 'error');
-                } finally {
-                    setTimeout(() => {
-                        btn.disabled = false;
-                        btn.textContent = '⚡ Verify Attestation';
-                    }, 3000);
-                }
+
+            updateStats() {
+                document.getElementById('total-members').textContent = this.communityPosts.length;
+                document.getElementById('total-posts').textContent = this.communityPosts.length;
             }
-            
-            async submitProposal() {
-                if (!this.canPerformAction('proposal', 5000)) return;
-                
-                const btn = document.getElementById('submit-proposal');
-                btn.disabled = true;
-                btn.textContent = '📜 Submitting...';
-                
-                try {
-                    const result = await this.makeRequest('/game/submit-proposal', 'POST', {
-                        proposalContent: 'Arena Governance Proposal - ' + new Date().toISOString()
-                    });
-                    
-                    this.currentUser.gameStats = result.newStats;
-                    this.addMessage(result.message, 'success');
-                    this.updateDisplay();
-                    this.showFloatingPoints(result.pointsChange);
-                    this.createParticleEffect();
-                    
-                } catch (error) {
-                    this.addMessage(`❌ Proposal failed: ${error.message}`, 'error');
-                } finally {
+
+            showStatus(message, type) {
+                const statusDiv = document.getElementById('form-status');
+                statusDiv.className = `status-message ${type}`;
+                statusDiv.textContent = message;
+                statusDiv.style.display = 'block';
+
+                if (type === 'success') {
                     setTimeout(() => {
-                        btn.disabled = false;
-                        btn.textContent = '📜 Submit Proposal';
+                        statusDiv.style.display = 'none';
                     }, 5000);
                 }
             }
-            
-            async showLeaderboard() {
-                try {
-                    const result = await this.makeRequest('/game/leaderboard');
-                    
-                    let html = `
-                        <p style="text-align: center; margin-bottom: 1rem;">
-                            Total Warriors: ${result.totalPlayers}
-                        </p>
-                        <table class="leaderboard-table">
-                            <thead>
-                                <tr>
-                                    <th>Rank</th>
-                                    <th>Warrior</th>
-                                    <th>Score</th>
-                                    <th>Honk Points</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                    `;
-                    
-                    result.leaderboard.forEach((player, index) => {
-                        const rank = index + 1;
-                        const trophy = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
-                        html += `
-                            <tr>
-                                <td>${trophy}</td>
-                                <td>@${player.twitterUsername}</td>
-                                <td>${player.gameStats.score}</td>
-                                <td>${player.gameStats.honkPoints}</td>
-                            </tr>
-                        `;
-                    });
-                    
-                    html += '</tbody></table>';
-                    
-                    document.getElementById('leaderboard-content').innerHTML = html;
-                    document.getElementById('leaderboard-modal').classList.remove('hidden');
-                    
-                } catch (error) {
-                    this.addMessage(`❌ Failed to load leaderboard: ${error.message}`, 'error');
-                }
+
+            clearForm() {
+                document.getElementById('community-form').reset();
             }
-            
-            characterClick() {
-                const bonusPoints = Math.floor(Math.random() * 5) + 1;
-                this.currentUser.gameStats.score += bonusPoints;
-                this.updateDisplay();
-                this.showFloatingPoints(`+${bonusPoints}`);
-                this.addMessage(`Character bonus! +${bonusPoints} points`, 'success');
-                
-                // Character animation
-                const character = document.getElementById('game-character');
-                character.style.transform = 'translateX(-50%) scale(1.2)';
-                setTimeout(() => {
-                    character.style.transform = 'translateX(-50%) scale(1)';
-                }, 200);
-            }
-            
-            canPerformAction(action, cooldown) {
-                const now = Date.now();
-                if (this.cooldowns[action] && now < this.cooldowns[action]) {
-                    const remaining = Math.ceil((this.cooldowns[action] - now) / 1000);
-                    this.addMessage(`⏰ Wait ${remaining} seconds before next ${action}`, 'error');
-                    return false;
-                }
-                this.cooldowns[action] = now + cooldown;
-                return true;
-            }
-            
-            async loadUserProfile() {
-                const result = await this.makeRequest('/game/profile');
-                this.currentUser = {
-                    username: result.username,
-                    gameStats: result.gameStats,
-                    joinedAt: result.joinedAt
-                };
-            }
-            
-            async testConnection() {
-                return this.makeRequest('/health');
-            }
-            
-            async verifyTwitterUsername(username) {
-                return this.makeRequest('/twitter/verify-username', 'POST', { username });
-            }
-            
-            async makeRequest(endpoint, method = 'GET', data = null) {
-                const headers = { 'Content-Type': 'application/json' };
-                if (this.token) headers['Authorization'] = `Bearer ${this.token}`;
-                
-                const config = { method, headers, mode: 'cors' };
-                if (data) config.body = JSON.stringify(data);
-                
-                const response = await fetch(`${this.apiURL}${endpoint}`, config);
-                const result = await response.json();
-                
-                if (!response.ok) {
-                    throw new Error(result.error || 'Request failed');
-                }
-                
-                return result;
-            }
-            
-            showLogin() {
-                document.getElementById('login-screen').classList.remove('hidden');
-                document.getElementById('game-arena').classList.add('hidden');
-            }
-            
-            showArena() {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('game-arena').classList.remove('hidden');
-            }
-            
-            updateDisplay() {
-                if (!this.currentUser) return;
-                
-                const stats = this.currentUser.gameStats;
-                const avatarUrl = `https://unavatar.io/twitter/${this.currentUser.username}`;
-                
-                document.getElementById('player-avatar').src = avatarUrl;
-                document.getElementById('player-name').textContent = `@${this.currentUser.username}`;
-                document.getElementById('score-display').textContent = stats.score;
-                document.getElementById('honk-points').textContent = stats.honkPoints;
-                document.getElementById('verifications').textContent = stats.verificationsCompleted;
-                document.getElementById('proposals').textContent = stats.proposalsSubmitted;
-            }
-            
-            updateWarriorCount() {
-                // Simulate community count
-                this.warriorCount = Math.floor(Math.random() * 500) + 100;
-                document.getElementById('warrior-count').textContent = this.warriorCount;
-                
-                // Update periodically
-                setInterval(() => {
-                    this.warriorCount += Math.floor(Math.random() * 3);
-                    document.getElementById('warrior-count').textContent = this.warriorCount;
-                }, 30000);
-            }
-            
-            showStatus(message, type) {
-                const statusDiv = document.getElementById('login-status');
-                statusDiv.className = `status-message ${type}`;
-                statusDiv.textContent = message;
-            }
-            
-            addMessage(message, type) {
-                const messagesDiv = document.getElementById('game-messages');
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${type}`;
-                messageDiv.innerHTML = `
-                    <strong>${new Date().toLocaleTimeString()}</strong> - ${message}
-                `;
-                
-                messagesDiv.appendChild(messageDiv);
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                
-                // Remove old messages
-                const messages = messagesDiv.querySelectorAll('.message');
-                if (messages.length > 10) {
-                    messages[0].remove();
-                }
-            }
-            
-            showFloatingPoints(points) {
-                const floating = document.createElement('div');
-                floating.className = 'floating-points';
-                floating.textContent = points;
-                floating.style.left = '50%';
-                floating.style.bottom = '300px';
-                
-                document.getElementById('game-arena').appendChild(floating);
-                
-                setTimeout(() => {
-                    if (floating.parentNode) {
-                        floating.parentNode.removeChild(floating);
-                    }
-                }, 2000);
-            }
-            
-            createParticleEffect() {
-                for (let i = 0; i < 10; i++) {
-                    setTimeout(() => {
-                        const particle = document.createElement('div');
-                        particle.className = 'particle';
-                        particle.style.left = Math.random() * 100 + '%';
-                        particle.style.animationDelay = Math.random() * 2 + 's';
-                        
-                        document.getElementById('background-effects').appendChild(particle);
-                        
-                        setTimeout(() => {
-                            if (particle.parentNode) {
-                                particle.parentNode.removeChild(particle);
-                            }
-                        }, 5000);
-                    }, i * 100);
-                }
-            }
-            
-            startBackgroundEffects() {
-                // Add running NPCs
-                setInterval(() => {
-                    const npc = document.createElement('div');
-                    npc.className = 'running-npc';
-                    npc.textContent = ['🏃‍♂️', '🏃‍♀️', '🧙‍♂️', '🧙‍♀️', '⚔️'][Math.floor(Math.random() * 5)];
-                    npc.style.bottom = Math.random() * 200 + 150 + 'px';
-                    
-                    document.getElementById('
+        }
+
+        function scrollToForm() {
+            document.getElementById('submission-form').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // Initialize the community wall
+        new AztecCommunityWall();
+    </script>
+</body>
+</html>
