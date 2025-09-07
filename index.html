@@ -834,32 +834,35 @@
 
             async loadCommunityPosts() {
                 try {
-                    // Try to load from backend first
+                    // Always try to load from backend first
+                    this.showStatus('Loading community posts...', 'info');
                     await this.loadFromBackend();
                     
-                    // If no backend posts, load from localStorage
-                    if (this.communityPosts.length === 0) {
-                        this.communityPosts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
-                    }
-                    
+                    console.log(`Loaded ${this.communityPosts.length} posts from backend`);
                     this.renderCommunityWall();
                 } catch (error) {
                     console.error('Failed to load community posts:', error);
-                    // Fallback to localStorage
-                    this.communityPosts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
+                    this.showStatus('Failed to load community posts', 'error');
+                    this.communityPosts = [];
                     this.renderCommunityWall();
                 }
             }
 
             async loadFromBackend() {
                 try {
-                    // Try to get community posts from your backend
-                    // You'll need to create this endpoint: GET /api/community/posts
                     const result = await this.makeRequest('/community/posts');
                     this.communityPosts = result.posts || [];
+                    console.log(`📥 Loaded ${this.communityPosts.length} posts from backend:`, this.communityPosts);
+                    
+                    if (this.communityPosts.length > 0) {
+                        this.showStatus(`Loaded ${this.communityPosts.length} community members`, 'success');
+                        setTimeout(() => {
+                            document.getElementById('form-status').style.display = 'none';
+                        }, 3000);
+                    }
                 } catch (error) {
-                    console.log('Backend posts not available yet:', error.message);
-                    // Don't show error to user, just use localStorage
+                    console.error('Backend loading error:', error);
+                    throw error;
                 }
             }
 
