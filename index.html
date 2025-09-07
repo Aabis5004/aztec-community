@@ -12,45 +12,10 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2d2d2d 100%);
-            color: #ffffff;
+            color: white;
             min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .floating-element {
-            position: absolute;
-            opacity: 0.1;
-            animation: float 20s infinite linear;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.1;
-            }
-            90% {
-                opacity: 0.1;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
         }
 
         .header {
@@ -60,13 +25,6 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(15px);
-            animation: slideDown 1s ease-out;
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
         }
 
         .header-content {
@@ -77,143 +35,24 @@
             align-items: center;
         }
 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .aztec-logo {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #D2691E, #FF8C00);
-            transform: rotate(45deg);
-            position: relative;
-            animation: logoSpin 10s infinite linear;
-        }
-
-        .aztec-logo::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            width: 30px;
-            height: 30px;
-            background: linear-gradient(45deg, #8B4513, #A0522D);
-        }
-
-        .aztec-logo::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            width: 15px;
-            height: 15px;
-            background: #FFD700;
-        }
-
-        @keyframes logoSpin {
-            0% { transform: rotate(45deg); }
-            100% { transform: rotate(405deg); }
-        }
-
-        .logo-text {
+        .logo {
             font-size: 2.5rem;
             font-weight: 900;
             color: #D2691E;
             text-shadow: 0 0 20px rgba(210, 105, 30, 0.5);
-            animation: glow 3s ease-in-out infinite alternate;
         }
 
-        @keyframes glow {
-            from { text-shadow: 0 0 20px rgba(210, 105, 30, 0.5); }
-            to { text-shadow: 0 0 30px rgba(210, 105, 30, 0.8), 0 0 40px rgba(210, 105, 30, 0.4); }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            color: #cccccc;
-            text-decoration: none;
+        .community-count {
+            background: rgba(210, 105, 30, 0.2);
             padding: 0.5rem 1rem;
-            border: 1px solid rgba(210, 105, 30, 0.3);
-            border-radius: 8px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(210, 105, 30, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .nav-link:hover::before {
-            left: 100%;
-        }
-
-        .nav-link:hover {
-            color: #D2691E;
-            border-color: #D2691E;
-            transform: translateY(-2px);
-        }
-
-        .community-stats {
-            display: flex;
-            gap: 2rem;
-            color: #cccccc;
-            animation: fadeInUp 1s ease-out 0.5s both;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #D2691E;
-            animation: countUp 2s ease-out;
-        }
-
-        @keyframes countUp {
-            from { transform: scale(0); }
-            to { transform: scale(1); }
+            border-radius: 20px;
+            border: 1px solid #D2691E;
         }
 
         .main-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
-            animation: fadeIn 1s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .intro-section {
@@ -223,105 +62,24 @@
             background: rgba(210, 105, 30, 0.1);
             border-radius: 20px;
             border: 1px solid rgba(210, 105, 30, 0.3);
-            position: relative;
-            overflow: hidden;
-            animation: slideUp 1s ease-out 0.3s both;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .intro-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(210, 105, 30, 0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .intro-section > * {
-            position: relative;
-            z-index: 2;
         }
 
         .intro-section h1 {
-            font-size: 3.5rem;
+            font-size: 3rem;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #D2691E, #FF8C00, #FFD700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: textShine 3s ease-in-out infinite;
+            color: #D2691E;
         }
 
-        @keyframes textShine {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .submission-form {
+        .add-form {
             background: rgba(255, 255, 255, 0.05);
             padding: 2rem;
             border-radius: 20px;
             margin-bottom: 3rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            position: relative;
-            animation: slideUp 1s ease-out 0.6s both;
         }
 
         .form-group {
             margin-bottom: 1.5rem;
-            animation: fadeInLeft 0.8s ease-out;
-        }
-
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .form-group:nth-child(even) {
-            animation: fadeInRight 0.8s ease-out;
-        }
-
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #D2691E;
-            font-weight: 600;
         }
 
         .form-input {
@@ -332,23 +90,13 @@
             background: rgba(0, 0, 0, 0.3);
             color: white;
             font-size: 1rem;
-            transition: all 0.3s;
-            position: relative;
         }
 
-        .form-input:focus {
-            outline: none;
-            border-color: #D2691E;
-            box-shadow: 0 0 20px rgba(210, 105, 30, 0.3);
-            transform: scale(1.02);
+        .form-input::placeholder {
+            color: #888;
         }
 
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .submit-btn {
+        .add-btn {
             background: linear-gradient(45deg, #D2691E, #FF8C00);
             color: white;
             border: none;
@@ -357,157 +105,18 @@
             cursor: pointer;
             font-weight: 600;
             font-size: 1.1rem;
+            width: 100%;
             transition: all 0.3s;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
         }
 
-        .submit-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .submit-btn:hover::before {
-            left: 100%;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
+        .add-btn:hover {
+            transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(210, 105, 30, 0.4);
         }
 
-        .wall-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .community-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 1.5rem;
-            border: 1px solid rgba(210, 105, 30, 0.2);
-            transition: all 0.5s;
-            backdrop-filter: blur(15px);
-            position: relative;
-            overflow: hidden;
-            animation: cardSlideIn 0.8s ease-out;
-        }
-
-        @keyframes cardSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(50px) rotateX(20deg);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) rotateX(0deg);
-            }
-        }
-
-        .community-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(210, 105, 30, 0.1), transparent);
-            transition: left 0.8s;
-        }
-
-        .community-card:hover::before {
-            left: 100%;
-        }
-
-        .community-card:hover {
-            transform: translateY(-10px) rotateX(5deg);
-            box-shadow: 0 20px 50px rgba(210, 105, 30, 0.3);
-            border-color: rgba(210, 105, 30, 0.6);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .profile-pic {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 3px solid #D2691E;
-            object-fit: cover;
-            transition: all 0.3s;
-            animation: profilePulse 2s ease-in-out infinite;
-        }
-
-        @keyframes profilePulse {
-            0%, 100% { box-shadow: 0 0 10px rgba(210, 105, 30, 0.3); }
-            50% { box-shadow: 0 0 20px rgba(210, 105, 30, 0.6); }
-        }
-
-        .delete-btn {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 0.3rem 0.6rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.3s;
-            margin-left: auto;
-        }
-
-        .delete-btn:hover {
-            background: #c82333;
-            transform: scale(1.1);
-        }
-
-        .question-block {
-            margin-bottom: 1rem;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            border-left: 4px solid #D2691E;
-            transition: all 0.3s;
-            position: relative;
-            z-index: 2;
-        }
-
-        .question-block:hover {
-            background: rgba(0, 0, 0, 0.3);
-            border-left-width: 6px;
-        }
-
-        .testnet-link {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(23, 162, 184, 0.8);
-            color: white;
-            padding: 0.3rem 0.6rem;
-            border-radius: 15px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            transition: all 0.3s;
-            z-index: 3;
-        }
-
-        .testnet-link:hover {
-            background: #17a2b8;
-            transform: scale(1.1);
+        .add-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .status-message {
@@ -515,18 +124,6 @@
             border-radius: 10px;
             margin: 1rem 0;
             font-weight: 600;
-            animation: messageSlide 0.5s ease-out;
-        }
-
-        @keyframes messageSlide {
-            from {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
         }
 
         .status-message.success {
@@ -541,38 +138,93 @@
             color: #ff6b7a;
         }
 
-        .join-button {
-            background: linear-gradient(45deg, #D2691E, #FF8C00);
+        .status-message.info {
+            background: rgba(23, 162, 184, 0.2);
+            border: 1px solid #17a2b8;
+            color: #5bc0de;
+        }
+
+        .wall-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .user-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(210, 105, 30, 0.2);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(210, 105, 30, 0.2);
+            border-color: rgba(210, 105, 30, 0.5);
+        }
+
+        .user-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #D2691E;
+            object-fit: cover;
+        }
+
+        .user-info h3 {
+            color: #D2691E;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-details {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #dc3545;
             color: white;
             border: none;
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
-            border-radius: 12px;
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            animation: buttonPulse 2s ease-in-out infinite;
+            font-size: 0.8rem;
         }
 
-        @keyframes buttonPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        .delete-btn:hover {
+            background: #c82333;
         }
 
-        .join-button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(210, 105, 30, 0.4);
-            animation: none;
+        .hidden {
+            display: none !important;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
         }
 
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
+            .main-container {
+                padding: 1rem;
             }
 
             .intro-section h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
 
             .wall-grid {
@@ -582,229 +234,118 @@
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="animated-bg" id="animated-bg"></div>
-
-    <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <div class="logo-section">
-                <div class="aztec-logo"></div>
-                <div class="logo-text">AZTEC</div>
-            </div>
-            <div class="nav-links">
-                <a href="https://testnet.aztec.network" target="_blank" class="nav-link">Testnet</a>
-                <a href="https://docs.aztec.network" target="_blank" class="nav-link">Docs</a>
-                <a href="https://github.com/AztecProtocol" target="_blank" class="nav-link">GitHub</a>
-            </div>
-            <div class="community-stats">
-                <div class="stat-item">
-                    <div class="stat-number" id="total-members">0</div>
-                    <div>Members</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="total-posts">0</div>
-                    <div>Stories</div>
-                </div>
+            <div class="logo">AZTEC COMMUNITY</div>
+            <div class="community-count">
+                <span>Members: <span id="member-count">0</span></span>
             </div>
         </div>
     </header>
 
-    <!-- Main Container -->
     <div class="main-container">
-        <!-- Intro Section -->
         <div class="intro-section">
-            <h1>Join the Aztec Community</h1>
-            <p style="font-size: 1.2rem; color: #cccccc; max-width: 800px; margin: 0 auto 2rem; line-height: 1.6;">
-                Share your journey in the world of privacy-preserving technology. Connect with builders, researchers, 
-                and privacy advocates who are shaping the future of decentralized applications.
-            </p>
-            <button class="join-button" onclick="scrollToForm()">Share Your Story</button>
+            <h1>Aztec Community Wall</h1>
+            <p>Join the Aztec community! Add your Twitter username to connect with fellow privacy advocates.</p>
         </div>
 
-        <!-- Submission Form -->
-        <div id="submission-form" class="submission-form">
-            <h2 style="color: #D2691E; margin-bottom: 1.5rem; text-align: center; font-size: 2rem;">Tell Your Story</h2>
+        <div class="add-form">
+            <h2 style="color: #D2691E; margin-bottom: 1.5rem; text-align: center;">Add Yourself to the Wall</h2>
             
-            <form id="community-form">
-                <div class="form-group">
-                    <label for="twitter-username">Twitter Username (without @)</label>
-                    <input type="text" id="twitter-username" class="form-input" placeholder="Enter your Twitter username" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="aztec-role">Your Role in Aztec Ecosystem</label>
-                    <input type="text" id="aztec-role" class="form-input" placeholder="e.g., Developer, Researcher, Community Member, Builder, Student..." required>
-                </div>
-
-                <div class="form-group">
-                    <label for="define-aztec">How do you define Aztec?</label>
-                    <textarea id="define-aztec" class="form-input form-textarea" placeholder="Share your understanding of Aztec's mission, technology, or impact..." required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="love-about-aztec">What excites you most about Aztec?</label>
-                    <textarea id="love-about-aztec" class="form-input form-textarea" placeholder="Tell us what draws you to Aztec - the technology, community, vision, or possibilities..." required></textarea>
-                </div>
-
-                <button type="submit" id="submit-btn" class="submit-btn">Add to Community Wall</button>
-            </form>
-
-            <div id="form-status"></div>
-        </div>
-
-        <!-- Community Wall -->
-        <div class="wall-container">
-            <div class="wall-header" style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 2.5rem; color: #D2691E; margin-bottom: 0.5rem;">Community Voices</h2>
-                <p style="color: #888; font-size: 1.1rem;">Stories from our incredible community members</p>
+            <div class="form-group">
+                <input type="text" id="twitter-username" class="form-input" placeholder="Enter your Twitter username (without @)" required>
             </div>
 
+            <button id="add-member-btn" class="add-btn">Add to Community Wall</button>
+            <div id="status-message"></div>
+        </div>
+
+        <div class="wall-section">
+            <h2 style="color: #D2691E; text-align: center; margin-bottom: 2rem;">Community Members</h2>
             <div id="wall-grid" class="wall-grid">
-                <div style="text-align: center; padding: 2rem; color: #888; grid-column: 1/-1;">
-                    Loading community stories...
-                </div>
+                <div class="loading">Loading community members...</div>
             </div>
         </div>
     </div>
 
     <script>
-        class EnhancedAztecWall {
+        class SimpleTwitterWall {
             constructor() {
                 this.apiURL = 'https://aztecgame.duckdns.org/api';
-                this.communityPosts = [];
+                this.members = [];
                 this.init();
             }
 
             async init() {
-                this.createBackgroundAnimation();
                 this.bindEvents();
-                await this.loadCommunityPosts();
-                this.updateStats();
-                this.startStatsAnimation();
-            }
-
-            createBackgroundAnimation() {
-                const bg = document.getElementById('animated-bg');
-                const symbols = ['⚡', '🔒', '🛡️', '🌟', '💎', '🚀', '⭐', '🔐'];
-                
-                setInterval(() => {
-                    const element = document.createElement('div');
-                    element.className = 'floating-element';
-                    element.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-                    element.style.left = Math.random() * 100 + '%';
-                    element.style.fontSize = (Math.random() * 20 + 20) + 'px';
-                    element.style.animationDelay = Math.random() * 2 + 's';
-                    element.style.animationDuration = (Math.random() * 10 + 15) + 's';
-                    
-                    bg.appendChild(element);
-                    
-                    setTimeout(() => {
-                        if (element.parentNode) {
-                            element.parentNode.removeChild(element);
-                        }
-                    }, 25000);
-                }, 3000);
+                await this.loadMembers();
+                this.updateCount();
             }
 
             bindEvents() {
-                document.getElementById('community-form').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.handleSubmission();
+                document.getElementById('add-member-btn').addEventListener('click', () => {
+                    this.addMember();
+                });
+
+                document.getElementById('twitter-username').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.addMember();
+                    }
                 });
             }
 
-            async handleSubmission() {
-                const submitBtn = document.getElementById('submit-btn');
-                const formData = this.getFormData();
-                
-                if (!this.validateForm(formData)) return;
+            async addMember() {
+                const username = document.getElementById('twitter-username').value.trim().replace('@', '');
+                const btn = document.getElementById('add-member-btn');
 
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Submitting...';
+                if (!username) {
+                    this.showStatus('Please enter a Twitter username', 'error');
+                    return;
+                }
+
+                btn.disabled = true;
+                btn.textContent = 'Adding...';
 
                 try {
                     this.showStatus('Verifying Twitter username...', 'info');
-                    
-                    const userResult = await this.verifyTwitterUser(formData.twitterUsername);
-                    
-                    if (userResult.success) {
-                        this.showStatus('Creating your community post...', 'info');
-                        
-                        const postData = {
-                            ...formData,
-                            profileImage: userResult.user.profileImage || `https://unavatar.io/twitter/${formData.twitterUsername}`,
-                            timestamp: new Date().toISOString(),
-                            id: Date.now().toString()
+
+                    // Verify Twitter user through your existing endpoint
+                    const result = await this.verifyTwitterUser(username);
+
+                    if (result.success) {
+                        // Create member object with Twitter data
+                        const member = {
+                            id: Date.now().toString(),
+                            username: username,
+                            profileImage: result.user.profileImage || `https://unavatar.io/twitter/${username}`,
+                            joinedAt: new Date().toISOString(),
+                            // Add any other Twitter details you want
+                            displayName: result.user.displayName || username,
+                            verified: result.user.verified || false
                         };
 
-                        await this.saveCommunityPost(postData);
+                        // Add to local array
+                        this.members.unshift(member);
                         
-                        this.showStatus('Successfully added to community wall!', 'success');
-                        this.clearForm();
-                        await this.loadCommunityPosts();
-                        this.updateStats();
-                        
-                        setTimeout(() => {
-                            document.querySelector('.wall-container').scrollIntoView({ 
-                                behavior: 'smooth' 
-                            });
-                        }, 1000);
+                        // Save to localStorage
+                        localStorage.setItem('communityMembers', JSON.stringify(this.members));
+
+                        // Update display
+                        this.renderWall();
+                        this.updateCount();
+
+                        this.showStatus(`Successfully added @${username} to the community wall!`, 'success');
+                        document.getElementById('twitter-username').value = '';
+
+                        // Optional: Also save to backend without blocking UI
+                        this.saveToBackend(member).catch(console.error);
                     }
                 } catch (error) {
                     this.showStatus(`Error: ${error.message}`, 'error');
                 } finally {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Add to Community Wall';
+                    btn.disabled = false;
+                    btn.textContent = 'Add to Community Wall';
                 }
-            }
-
-            async deleteMember(id) {
-                if (!confirm('Are you sure you want to delete this community member?')) return;
-
-                try {
-                    // Remove from local storage
-                    this.communityPosts = this.communityPosts.filter(post => post.id !== id);
-                    localStorage.setItem('communityPosts', JSON.stringify(this.communityPosts));
-                    
-                    // TODO: Add actual backend deletion endpoint
-                    // await this.makeRequest(`/community/${id}`, 'DELETE');
-                    
-                    await this.loadCommunityPosts();
-                    this.updateStats();
-                    this.showStatus('Member removed successfully', 'success');
-                } catch (error) {
-                    this.showStatus(`Error deleting member: ${error.message}`, 'error');
-                }
-            }
-
-            getFormData() {
-                return {
-                    twitterUsername: document.getElementById('twitter-username').value.trim().replace('@', ''),
-                    aztecRole: document.getElementById('aztec-role').value.trim(),
-                    defineAztec: document.getElementById('define-aztec').value.trim(),
-                    loveAboutAztec: document.getElementById('love-about-aztec').value.trim()
-                };
-            }
-
-            validateForm(data) {
-                if (!data.twitterUsername) {
-                    this.showStatus('Please enter your Twitter username', 'error');
-                    return false;
-                }
-                if (!data.aztecRole || data.aztecRole.length < 3) {
-                    this.showStatus('Please enter your role (at least 3 characters)', 'error');
-                    return false;
-                }
-                if (!data.defineAztec || data.defineAztec.length < 20) {
-                    this.showStatus('Please provide a more detailed definition of Aztec (at least 20 characters)', 'error');
-                    return false;
-                }
-                if (!data.loveAboutAztec || data.loveAboutAztec.length < 20) {
-                    this.showStatus('Please share more about what excites you about Aztec (at least 20 characters)', 'error');
-                    return false;
-                }
-                return true;
             }
 
             async verifyTwitterUser(username) {
@@ -821,132 +362,94 @@
                 return result;
             }
 
-            async saveCommunityPost(postData) {
-                const existingPosts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
-                existingPosts.unshift(postData);
-                localStorage.setItem('communityPosts', JSON.stringify(existingPosts));
-                
-                // TODO: Add actual backend endpoint for community posts
-                // await this.makeRequest('/community/posts', 'POST', postData);
-                
-                await new Promise(resolve => setTimeout(resolve, 1000));
+            async saveToBackend(member) {
+                try {
+                    // Optional: Save to your backend database
+                    const response = await fetch(`${this.apiURL}/community/members`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(member)
+                    });
+                    console.log('Saved to backend:', response.ok);
+                } catch (error) {
+                    console.log('Backend save failed:', error.message);
+                }
             }
 
-            async loadCommunityPosts() {
+            async loadMembers() {
                 try {
-                    // Always try to load from backend first
-                    this.showStatus('Loading community posts...', 'info');
+                    // Load from localStorage first (immediate display)
+                    this.members = JSON.parse(localStorage.getItem('communityMembers') || '[]');
+                    this.renderWall();
+
+                    // Optional: Try to load from backend too
                     await this.loadFromBackend();
-                    
-                    console.log(`Loaded ${this.communityPosts.length} posts from backend`);
-                    this.renderCommunityWall();
                 } catch (error) {
-                    console.error('Failed to load community posts:', error);
-                    this.showStatus('Failed to load community posts', 'error');
-                    this.communityPosts = [];
-                    this.renderCommunityWall();
+                    console.error('Error loading members:', error);
+                    this.renderWall();
                 }
             }
 
             async loadFromBackend() {
                 try {
-                    const result = await this.makeRequest('/community/posts');
-                    this.communityPosts = result.posts || [];
-                    console.log(`📥 Loaded ${this.communityPosts.length} posts from backend:`, this.communityPosts);
-                    
-                    if (this.communityPosts.length > 0) {
-                        this.showStatus(`Loaded ${this.communityPosts.length} community members`, 'success');
-                        setTimeout(() => {
-                            document.getElementById('form-status').style.display = 'none';
-                        }, 3000);
+                    // Try to load from backend if available
+                    const response = await fetch(`${this.apiURL}/community/members`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.members && data.members.length > 0) {
+                            this.members = data.members;
+                            localStorage.setItem('communityMembers', JSON.stringify(this.members));
+                            this.renderWall();
+                        }
                     }
                 } catch (error) {
-                    console.error('Backend loading error:', error);
-                    throw error;
+                    console.log('Backend not available:', error.message);
                 }
             }
 
-            renderCommunityWall() {
+            deleteMember(id) {
+                if (!confirm('Remove this member from the wall?')) return;
+
+                this.members = this.members.filter(member => member.id !== id);
+                localStorage.setItem('communityMembers', JSON.stringify(this.members));
+                this.renderWall();
+                this.updateCount();
+                this.showStatus('Member removed', 'success');
+            }
+
+            renderWall() {
                 const wallGrid = document.getElementById('wall-grid');
-                
-                if (this.communityPosts.length === 0) {
-                    wallGrid.innerHTML = '<div style="text-align: center; padding: 2rem; color: #888; grid-column: 1/-1;">No community posts yet. Be the first to share your story!</div>';
+
+                if (this.members.length === 0) {
+                    wallGrid.innerHTML = '<div class="loading">No community members yet. Be the first to join!</div>';
                     return;
                 }
 
-                wallGrid.innerHTML = this.communityPosts.map((post, index) => `
-                    <div class="community-card" style="animation-delay: ${index * 0.1}s">
-                        <a href="https://testnet.aztec.network" target="_blank" class="testnet-link">Testnet</a>
-                        <div class="card-header">
-                            <img src="${post.profileImage}" alt="${post.twitterUsername}" class="profile-pic"
-                                 onerror="this.src='data:image/svg+xml,<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"70\\" height=\\"70\\"><circle cx=\\"35\\" cy=\\"35\\" r=\\"35\\" fill=\\"%23D2691E\\"/><text x=\\"35\\" y=\\"40\\" text-anchor=\\"middle\\" fill=\\"white\\" font-size=\\"20\\">${post.twitterUsername[0].toUpperCase()}</text></svg>'">
+                wallGrid.innerHTML = this.members.map(member => `
+                    <div class="user-card">
+                        <button class="delete-btn" onclick="wall.deleteMember('${member.id}')">×</button>
+                        <div class="user-header">
+                            <img src="${member.profileImage}" alt="${member.username}" class="profile-pic"
+                                 onerror="this.src='data:image/svg+xml,<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"60\\" height=\\"60\\"><circle cx=\\"30\\" cy=\\"30\\" r=\\"30\\" fill=\\"%23D2691E\\"/><text x=\\"30\\" y=\\"35\\" text-anchor=\\"middle\\" fill=\\"white\\" font-size=\\"16\\">${member.username[0].toUpperCase()}</text></svg>'">
                             <div class="user-info">
-                                <h3 style="color: #D2691E; font-size: 1.2rem; margin-bottom: 0.2rem;">@${post.twitterUsername}</h3>
-                                <div class="role" style="color: #FF8C00; font-size: 0.9rem; font-weight: 600;">${post.aztecRole}</div>
+                                <h3>@${member.username}</h3>
+                                <div class="user-details">
+                                    ${member.displayName ? `<div>${member.displayName}</div>` : ''}
+                                    <div>Joined: ${new Date(member.joinedAt).toLocaleDateString()}</div>
+                                    ${member.verified ? '<div style="color: #1DA1F2;">✓ Verified</div>' : ''}
+                                </div>
                             </div>
-                            <button class="delete-btn" onclick="window.aztecWall.deleteMember('${post.id}')">Delete</button>
-                        </div>
-                        <div class="card-content" style="line-height: 1.6;">
-                            <div class="question-block">
-                                <div class="question" style="font-size: 0.9rem; color: #D2691E; font-weight: 600; margin-bottom: 0.5rem;">How do you define Aztec?</div>
-                                <div class="answer" style="color: #ffffff; font-size: 0.95rem;">${post.defineAztec}</div>
-                            </div>
-                            <div class="question-block">
-                                <div class="question" style="font-size: 0.9rem; color: #D2691E; font-weight: 600; margin-bottom: 0.5rem;">What excites you most about Aztec?</div>
-                                <div class="answer" style="color: #ffffff; font-size: 0.95rem;">${post.loveAboutAztec}</div>
-                            </div>
-                        </div>
-                        <div class="card-footer" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.8rem; color: #888; text-align: right;">
-                            ${new Date(post.timestamp).toLocaleDateString()} at ${new Date(post.timestamp).toLocaleTimeString()}
                         </div>
                     </div>
                 `).join('');
             }
 
-            updateStats() {
-                const totalMembers = this.communityPosts.length;
-                this.animateNumber('total-members', totalMembers);
-                this.animateNumber('total-posts', totalMembers);
-            }
-
-            animateNumber(elementId, targetNumber) {
-                const element = document.getElementById(elementId);
-                const startNumber = parseInt(element.textContent) || 0;
-                const duration = 1000;
-                const startTime = Date.now();
-
-                const animate = () => {
-                    const elapsed = Date.now() - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    const currentNumber = Math.floor(startNumber + (targetNumber - startNumber) * progress);
-                    
-                    element.textContent = currentNumber;
-                    
-                    if (progress < 1) {
-                        requestAnimationFrame(animate);
-                    }
-                };
-
-                animate();
-            }
-
-            startStatsAnimation() {
-                setInterval(() => {
-                    const members = document.getElementById('total-members');
-                    const posts = document.getElementById('total-posts');
-                    
-                    members.style.transform = 'scale(1.1)';
-                    posts.style.transform = 'scale(1.1)';
-                    
-                    setTimeout(() => {
-                        members.style.transform = 'scale(1)';
-                        posts.style.transform = 'scale(1)';
-                    }, 200);
-                }, 5000);
+            updateCount() {
+                document.getElementById('member-count').textContent = this.members.length;
             }
 
             showStatus(message, type) {
-                const statusDiv = document.getElementById('form-status');
+                const statusDiv = document.getElementById('status-message');
                 statusDiv.className = `status-message ${type}`;
                 statusDiv.textContent = message;
                 statusDiv.style.display = 'block';
@@ -954,38 +457,13 @@
                 if (type === 'success') {
                     setTimeout(() => {
                         statusDiv.style.display = 'none';
-                    }, 5000);
+                    }, 3000);
                 }
-            }
-
-            clearForm() {
-                document.getElementById('community-form').reset();
-            }
-
-            async makeRequest(endpoint, method = 'GET', data = null) {
-                const headers = { 'Content-Type': 'application/json' };
-                const config = { method, headers, mode: 'cors' };
-                if (data) config.body = JSON.stringify(data);
-
-                const response = await fetch(`${this.apiURL}${endpoint}`, config);
-                const result = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(result.error || 'Request failed');
-                }
-
-                return result;
             }
         }
 
-        function scrollToForm() {
-            document.getElementById('submission-form').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
-        }
-
-        // Initialize the enhanced Aztec wall
-        window.aztecWall = new EnhancedAztecWall();
+        // Initialize the wall
+        const wall = new SimpleTwitterWall();
     </script>
 </body>
 </html>
