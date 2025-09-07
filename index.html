@@ -158,6 +158,12 @@
             color: #ef4444;
         }
 
+        .status-info {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #3b82f6;
+        }
+
         .community-wall {
             max-width: 1200px;
             margin: 2rem auto;
@@ -185,6 +191,7 @@
             padding: 1.5rem;
             transition: all 0.3s ease;
             animation: slideIn 0.5s ease-out;
+            position: relative;
         }
 
         @keyframes slideIn {
@@ -274,10 +281,6 @@
             background: rgba(239, 68, 68, 0.4);
         }
 
-        .member-card {
-            position: relative;
-        }
-
         .empty-state {
             text-align: center;
             padding: 4rem 2rem;
@@ -287,6 +290,12 @@
         .empty-state h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
+            color: #ff8800;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
             color: #ff8800;
         }
 
@@ -336,10 +345,7 @@
     <div class="community-wall">
         <h2 class="wall-title">Community Warriors</h2>
         <div class="members-grid" id="members-grid">
-            <div class="empty-state">
-                <h3>No community members yet</h3>
-                <p>Be the first to join the Aztec community wall!</p>
-            </div>
+            <div class="loading">Loading community members...</div>
         </div>
     </div>
 
@@ -347,13 +353,13 @@
         class CommunityWall {
             constructor() {
                 this.baseURL = 'https://aztecgame.duckdns.org/api';
-                this.members = this.loadMembers();
+                this.members = [];
                 this.init();
             }
 
-            init() {
-                this.displayMembers();
+            async init() {
                 this.setupEventListeners();
+                await this.loadMembers();
                 this.updateStats();
             }
 
@@ -364,10 +370,29 @@
                 });
             }
 
+            async loadMembers() {
+                try {
+                    console.log('Loading community members from backend...');
+                    const response = await fetch(`${this.baseURL}/wall/members`);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.members = data.members || [];
+                        console.log(`Loaded ${this.members.length} members from backend`);
+                    } else {
+                        throw new Error('Failed to load members');
+                    }
+                } catch (error) {
+                    console.error('Error loading members:', error);
+                    this.members = [];
+                }
+                
+                this.displayMembers();
+            }
+
             async addMember() {
                 const username = document.getElementById('twitter-username').value.trim();
                 const submitBtn = document.getElementById('submit-btn');
-                const statusDiv = document.getElementById('status');
 
                 if (!username) {
                     this.showStatus('Please enter your Twitter username', 'error');
@@ -377,19 +402,12 @@
                 // Clean username (remove @ if present)
                 const cleanUsername = username.replace('@', '');
 
-                // Check if user already exists
-                if (this.members.find(m => m.username.toLowerCase() === cleanUsername.toLowerCase())) {
-                    this.showStatus('This user is already on the community wall', 'error');
-                    return;
-                }
-
                 submitBtn.disabled = true;
-                submitBtn.textContent = 'Verifying...';
-                this.showStatus('Verifying Twitter username...', 'info');
+                submitBtn.textContent = 'Adding to wall...';
+                this.showStatus('Verifying Twitter username and adding to wall...', 'info');
 
                 try {
-                    // Use your existing Twitter verification endpoint
-                    const response = await fetch(`${this.baseURL}/twitter/verify-username`, {
+                    const response = await fetch(`${this.baseURL}/wall/add-member`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -400,28 +418,20 @@
                     const data = await response.json();
 
                     if (response.ok && data.success) {
-                        // Add member to community wall
-                        const newMember = {
-                            id: Date.now().toString(),
-                            username: cleanUsername,
-                            profileImage: `https://unavatar.io/twitter/${cleanUsername}`,
-                            joinedAt: new Date(),
-                            score: data.user?.gameStats?.score || 100
-                        };
-
-                        this.members.push(newMember);
-                        this.saveMembers();
-                        this.displayMembers();
-                        this.updateStats();
-
-                        this.showStatus(`Welcome ${cleanUsername}! You've joined the community wall.`, 'success');
+                        this.showStatus(data.message, 'success');
                         document.getElementById('twitter-username').value = '';
+                        
+                        // Reload members from backend to get the updated list
+                        await this.loadMembers();
+                        this.updateStats();
                     } else {
-                        throw new Error(data.error || 'Failed to verify Twitter username');
+                        throw new Error(data.error || 'Failed to add member to wall');
                     }
                 } catch (error) {
                     console.error('Error adding member:', error);
-                    if (error.message.includes('429') || error.message.includes('rate limit')) {
+                    if (error.message.includes('already on the community wall')) {
+                        this.showStatus('You are already on the community wall!', 'error');
+                    } else if (error.message.includes('API limit reached') || error.message.includes('429')) {
                         this.showStatus('Twitter API limit reached. Please try again later.', 'error');
                     } else if (error.message.includes('not found')) {
                         this.showStatus('Twitter username not found. Please check the spelling.', 'error');
@@ -449,18 +459,18 @@
 
                 grid.innerHTML = this.members.map(member => `
                     <div class="member-card">
-                        <button class="delete-btn" onclick="communityWall.removeMember('${member.id}')" title="Remove member">
+                        <button class="delete-btn" onclick="communityWall.removeMember('${member._id}')" title="Remove member">
                             ×
                         </button>
                         <div class="member-header">
                             <img 
                                 src="${member.profileImage}" 
-                                alt="${member.username}" 
+                                alt="${member.twitterUsername}" 
                                 class="member-avatar"
-                                onerror="this.src='https://via.placeholder.com/60x60/ff8800/ffffff?text=${member.username.charAt(0).toUpperCase()}'"
+                                onerror="this.src='https://via.placeholder.com/60x60/ff8800/ffffff?text=${member.twitterUsername.charAt(0).toUpperCase()}'"
                             >
                             <div class="member-info">
-                                <h3>@${member.username}</h3>
+                                <h3>@${member.twitterUsername}</h3>
                                 <div class="member-username">Aztec Warrior</div>
                             </div>
                         </div>
@@ -478,13 +488,26 @@
                 `).join('');
             }
 
-            removeMember(memberId) {
+            async removeMember(memberId) {
                 if (confirm('Are you sure you want to remove this member?')) {
-                    this.members = this.members.filter(m => m.id !== memberId);
-                    this.saveMembers();
-                    this.displayMembers();
-                    this.updateStats();
-                    this.showStatus('Member removed successfully', 'success');
+                    try {
+                        const response = await fetch(`${this.baseURL}/wall/members/${memberId}`, {
+                            method: 'DELETE'
+                        });
+
+                        const data = await response.json();
+                        
+                        if (response.ok && data.success) {
+                            this.showStatus('Member removed successfully', 'success');
+                            await this.loadMembers(); // Reload from backend
+                            this.updateStats();
+                        } else {
+                            throw new Error(data.error || 'Failed to remove member');
+                        }
+                    } catch (error) {
+                        console.error('Error removing member:', error);
+                        this.showStatus('Failed to remove member', 'error');
+                    }
                 }
             }
 
@@ -508,24 +531,6 @@
             formatDate(date) {
                 const d = new Date(date);
                 return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            }
-
-            loadMembers() {
-                try {
-                    const saved = localStorage.getItem('aztec-community-members');
-                    return saved ? JSON.parse(saved) : [];
-                } catch (error) {
-                    console.error('Error loading members:', error);
-                    return [];
-                }
-            }
-
-            saveMembers() {
-                try {
-                    localStorage.setItem('aztec-community-members', JSON.stringify(this.members));
-                } catch (error) {
-                    console.error('Error saving members:', error);
-                }
             }
         }
 
