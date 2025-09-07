@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏺 Aztec: Honk if You Phonk</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Login Section -->
+        <div id="login-section" class="section">
+            <div class="aztec-container">
+                <h1>🏺 Aztec: Honk if You Phonk 🦅</h1>
+                <p class="subtitle">Enter the Sacred Temple of Privacy</p>
+                
+                <div class="login-card">
+                    <h2>🚪 Join the Temple</h2>
+                    <input type="text" id="twitter-username" placeholder="Enter your Twitter username" />
+                    <button id="join-btn" class="aztec-button">🦅 Enter Temple</button>
+                    <div id="login-status" class="status-message"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Game Section -->
+        <div id="game-section" class="section hidden">
+            <div class="aztec-container">
+                <header class="game-header">
+                    <h1>🏺 Aztec Temple 🏺</h1>
+                    <div id="user-info" class="user-info"></div>
+                </header>
+                
+                <div class="stats-panel" id="stats-panel">
+                    <!-- Stats will be loaded here -->
+                </div>
+                
+                <div class="game-actions">
+                    <button id="verify-btn" class="action-button verify">
+                        ⚡ Verify Attestation
+                    </button>
+                    <button id="propose-btn" class="action-button propose">
+                        📜 Submit Proposal
+                    </button>
+                    <button id="leaderboard-btn" class="action-button leaderboard">
+                        🏆 Leaderboard
+                    </button>
+                </div>
+                
+                <div id="game-messages" class="game-messages"></div>
+                <div id="leaderboard-section" class="leaderboard-section hidden"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/api.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
