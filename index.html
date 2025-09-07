@@ -206,95 +206,6 @@
             animation: badgePulse 3s ease-in-out infinite;
         }
 
-        .hero-logo {
-            margin-bottom: 2rem;
-        }
-
-        .aztec-logo-css {
-            width: 200px;
-            height: 200px;
-            position: relative;
-            margin: 0 auto;
-            animation: logoRotate 10s linear infinite;
-            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
-        }
-
-        .aztec-outer-diamond {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(45deg, #ffd700 0%, #ff6b35 50%, #ffd700 100%);
-            transform: rotate(45deg);
-            border-radius: 20px;
-            animation: pulse1 4s ease-in-out infinite;
-        }
-
-        .aztec-middle-diamond {
-            position: absolute;
-            top: 25px;
-            left: 25px;
-            width: 150px;
-            height: 150px;
-            background: linear-gradient(45deg, #000 0%, #1a1a1a 50%, #000 100%);
-            transform: rotate(45deg);
-            border-radius: 15px;
-            animation: pulse2 4s ease-in-out infinite 0.5s;
-        }
-
-        .aztec-inner-diamond {
-            position: absolute;
-            top: 50px;
-            left: 50px;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(45deg, #ffd700 0%, #ff6b35 50%, #ffd700 100%);
-            transform: rotate(45deg);
-            border-radius: 10px;
-            animation: pulse3 4s ease-in-out infinite 1s;
-        }
-
-        .aztec-center-dot {
-            position: absolute;
-            top: 85px;
-            left: 85px;
-            width: 30px;
-            height: 30px;
-            background: radial-gradient(circle, #fff 0%, #ffd700 100%);
-            border-radius: 50%;
-            animation: centerGlow 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse1 {
-            0%, 100% { transform: rotate(45deg) scale(1); opacity: 1; }
-            50% { transform: rotate(45deg) scale(1.05); opacity: 0.9; }
-        }
-
-        @keyframes pulse2 {
-            0%, 100% { transform: rotate(45deg) scale(1); opacity: 1; }
-            50% { transform: rotate(45deg) scale(1.1); opacity: 0.8; }
-        }
-
-        @keyframes pulse3 {
-            0%, 100% { transform: rotate(45deg) scale(1); opacity: 1; }
-            50% { transform: rotate(45deg) scale(1.15); opacity: 0.7; }
-        }
-
-        @keyframes centerGlow {
-            0%, 100% { 
-                transform: scale(1); 
-                box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
-            }
-            50% { 
-                transform: scale(1.2); 
-                box-shadow: 0 0 20px rgba(255, 215, 0, 1);
-            }
-        }
-
-        @keyframes logoRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         @keyframes badgePulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
             50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
@@ -834,9 +745,6 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-badge">YOU ARE NOW ENTERING</div>
-        <div class="hero-logo">
-            <img src="https://raw.githubusercontent.com/Aabis5004/aztec-game-frontend/main/aztec-logo.jpg" alt="Aztec Logo" class="hero-aztec-logo">
-        </div>
         <h1 class="hero-title">The Next<br>Renaissance</h1>
         <p class="hero-subtitle">Feast your eyes on</p>
         <p class="hero-description">
