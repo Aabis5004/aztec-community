@@ -1,7 +1,7 @@
 class GameAPI {
     constructor() {
         // Your VPS IP is configured here!
-        this.baseURL = 'http://162.250.191.81:3001/api';
+        this.baseURL = 'https://cors-anywhere.herokuapp.com/http://162.250.191.81:3001/api';
         this.token = localStorage.getItem('aztec-game-token');
         console.log('🔧 API initialized with baseURL:', this.baseURL);
     }
