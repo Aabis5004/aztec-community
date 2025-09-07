@@ -1,7 +1,7 @@
 class GameAPI {
     constructor() {
         // Your VPS IP is configured here!
-       this.baseURL = 'http://aztecgame.duckdns.org/api';
+      this.baseURL = 'https://aztecgame.duckdns.org/api';
         this.token = localStorage.getItem('aztec-game-token');
         console.log('🔧 API initialized with baseURL:', this.baseURL);
     }
