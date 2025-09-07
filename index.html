@@ -206,6 +206,23 @@
             animation: badgePulse 3s ease-in-out infinite;
         }
 
+        .hero-logo {
+            margin-bottom: 2rem;
+        }
+
+        .hero-aztec-logo {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            animation: logoRotate 10s linear infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
+        }
+
+        @keyframes logoRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         @keyframes badgePulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
             50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
