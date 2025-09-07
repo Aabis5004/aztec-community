@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aztec: Honk if You Phonk - Arena</title>
+    <title>Aztec Arena Runner</title>
     <style>
         * {
             margin: 0;
@@ -12,850 +12,653 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Courier New', monospace;
             background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: #ffffff;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .header {
-            background: #000000;
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #333;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            color: #ffffff;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .nav-btn {
-            background: #333;
             color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s;
+            overflow: hidden;
         }
 
-        .nav-btn:hover {
-            background: #555;
-            transform: translateY(-1px);
+        .game-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-            text-align: center;
+        .game-canvas {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #87CEEB 0%, #87CEEB 30%, #8B4513 30%, #8B4513 100%);
             position: relative;
         }
 
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #ffffff, #cccccc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: #aaaaaa;
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .aztec-symbol {
+        .ground {
             position: absolute;
-            right: 10%;
-            top: 20%;
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(45deg, #333, #666);
-            transform: rotate(45deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .aztec-symbol::before {
-            content: '';
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(45deg, #666, #999);
-            position: absolute;
-        }
-
-        .aztec-symbol::after {
-            content: '';
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, #999, #ccc);
-            position: absolute;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: rotate(45deg) translateY(0px); }
-            50% { transform: rotate(45deg) translateY(-20px); }
-        }
-
-        .game-section {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 2rem auto;
-            max-width: 800px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .login-card, .game-interface {
-            text-align: center;
-        }
-
-        .input-group {
-            margin-bottom: 2rem;
-        }
-
-        .twitter-input {
+            bottom: 0;
             width: 100%;
-            max-width: 400px;
-            padding: 1rem;
-            font-size: 1.1rem;
-            border: 2px solid #333;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-align: center;
+            height: 100px;
+            background: repeating-linear-gradient(
+                90deg,
+                #8B4513 0px,
+                #8B4513 50px,
+                #A0522D 50px,
+                #A0522D 100px
+            );
         }
 
-        .twitter-input::placeholder {
-            color: #aaa;
-        }
-
-        .aztec-button {
-            background: linear-gradient(45deg, #8B4513, #D2691E);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
-            border-radius: 12px;
-            cursor: pointer;
+        .player {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            bottom: 100px;
+            left: 100px;
+            background: #FFD700;
+            border-radius: 10px;
             transition: all 0.3s;
-            font-weight: 600;
-            margin: 0.5rem;
-            min-width: 200px;
-        }
-
-        .aztec-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.4);
-        }
-
-        .user-profile {
+            z-index: 10;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-        }
-
-        .profile-image {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 3px solid #D2691E;
-            object-fit: cover;
-        }
-
-        .user-info h3 {
-            color: #D2691E;
-            margin-bottom: 0.5rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #D2691E;
-            display: block;
-        }
-
-        .stat-label {
-            color: #aaa;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 2rem 0;
-        }
-
-        .action-button {
-            padding: 1rem 1.5rem;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            min-width: 180px;
-        }
-
-        .verify-btn {
-            background: linear-gradient(45deg, #FFD700, #FFA500);
-            color: #8B4513;
-        }
-
-        .propose-btn {
-            background: linear-gradient(45deg, #32CD32, #228B22);
-            color: white;
-        }
-
-        .leaderboard-btn {
-            background: linear-gradient(45deg, #FF6347, #DC143C);
-            color: white;
-        }
-
-        .action-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .action-button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .game-messages {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 1rem;
-            margin: 1rem 0;
-            max-height: 200px;
-            overflow-y: auto;
-            text-align: left;
-        }
-
-        .message {
-            padding: 0.5rem;
-            margin: 0.5rem 0;
-            border-radius: 6px;
-            animation: slideIn 0.5s ease-out;
-        }
-
-        .message.success {
-            background: rgba(52, 211, 153, 0.2);
-            border-left: 4px solid #34d399;
-        }
-
-        .message.error {
-            background: rgba(248, 113, 113, 0.2);
-            border-left: 4px solid #f87171;
-        }
-
-        .message.info {
-            background: rgba(59, 130, 246, 0.2);
-            border-left: 4px solid #3b82f6;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .running-character {
-            position: fixed;
             font-size: 30px;
-            z-index: 1000;
-            pointer-events: none;
-            animation: bounce 1s infinite;
+            border: 3px solid #FFA500;
+        }
+
+        .player.jumping {
+            bottom: 200px;
+        }
+
+        .player.ducking {
+            height: 40px;
+            bottom: 100px;
+        }
+
+        .obstacle {
+            position: absolute;
+            width: 40px;
+            height: 60px;
+            bottom: 100px;
+            background: #DC143C;
+            border-radius: 5px;
+            animation: moveLeft 3s linear infinite;
+        }
+
+        .blockchain-enemy {
+            position: absolute;
+            width: 80px;
+            height: 100px;
+            bottom: 100px;
+            background: linear-gradient(45deg, #FF4500, #FF6347);
+            border-radius: 10px;
+            animation: moveLeft 4s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            border: 2px solid #8B0000;
+        }
+
+        .collectible {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            bottom: 150px;
+            background: #32CD32;
+            border-radius: 50%;
+            animation: moveLeft 3s linear infinite, bounce 1s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        @keyframes moveLeft {
+            from { right: -100px; }
+            to { right: 100vw; }
         }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
-        .leaderboard {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
+        .hud {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 100;
         }
 
-        .leaderboard table {
+        .hud h3 {
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .stat {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            min-width: 200px;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .login-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            border-collapse: collapse;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
         }
 
-        .leaderboard th,
-        .leaderboard td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .login-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
         }
 
-        .leaderboard th {
-            background: rgba(139, 69, 19, 0.3);
-            color: #D2691E;
+        .login-input {
+            width: 300px;
+            padding: 15px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .login-input::placeholder {
+            color: #ccc;
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #8B4513;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            z-index: 1000;
         }
 
         .hidden {
             display: none !important;
         }
 
-        .status-message {
-            margin: 1rem 0;
-            padding: 1rem;
-            border-radius: 8px;
-            font-weight: 500;
-        }
-
-        .status-message.success { background: rgba(52, 211, 153, 0.2); color: #34d399; }
-        .status-message.error { background: rgba(248, 113, 113, 0.2); color: #f87171; }
-        .status-message.info { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
-
-        .particle {
+        .message-popup {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #D2691E;
-            border-radius: 50%;
-            pointer-events: none;
-            animation: float-up 3s linear infinite;
+            top: 50px;
+            right: 20px;
+            background: #32CD32;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            animation: slideIn 0.5s ease-out;
+            z-index: 50;
         }
 
-        @keyframes float-up {
-            0% {
-                opacity: 1;
-                transform: translateY(0px) rotate(0deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-100vh) rotate(360deg);
-            }
+        .message-popup.error {
+            background: #DC143C;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 200px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #32CD32, #FFD700);
+            width: 0%;
+            transition: width 0.3s;
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">AZTEC</div>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="window.open('https://testnet.aztec.network', '_blank')">Official Testnet</button>
-            <button class="nav-btn" onclick="showAbout()">About</button>
-        </div>
-    </header>
-
-    <div class="hero-section">
-        <h1 class="hero-title">Enter the Adversarial Testnet Arena</h1>
-        <p class="hero-subtitle">
-            Stress test Aztec's decentralized future. Slash bad actors.<br>
-            Propose, attest, and govern — the training wheels are coming off.
-        </p>
-        <div class="aztec-symbol"></div>
-    </div>
-
-    <div class="game-section">
-        <!-- Login Section -->
-        <div id="login-section" class="login-card">
-            <h2>🚪 Join the Validator Set</h2>
-            <div class="input-group">
-                <input type="text" id="twitter-username" class="twitter-input" placeholder="Enter your Twitter username (without @)" />
+    <div class="game-container">
+        <!-- Login Overlay -->
+        <div id="login-overlay" class="login-overlay">
+            <div class="login-card">
+                <h2>🏺 Enter the Aztec Arena</h2>
+                <p>Battle against centralized blockchains!</p>
+                <input type="text" id="username-input" class="login-input" placeholder="Twitter username (no @)">
+                <br>
+                <button id="start-game-btn" class="start-btn">🦅 Start Battle</button>
+                <div id="login-status"></div>
             </div>
-            <button id="join-btn" class="aztec-button">🦅 Enter Arena</button>
-            <div id="login-status" class="status-message"></div>
         </div>
 
-        <!-- Game Interface -->
-        <div id="game-section" class="game-interface hidden">
-            <div id="user-profile" class="user-profile">
-                <!-- User profile will be populated here -->
-            </div>
+        <!-- Game Canvas -->
+        <div class="game-canvas">
+            <div class="ground"></div>
+            <div id="player" class="player">🏃</div>
+        </div>
 
-            <div class="stats-grid" id="stats-grid">
-                <!-- Stats will be populated here -->
+        <!-- HUD -->
+        <div class="hud">
+            <h3>Arena Warrior</h3>
+            <div class="stat">
+                <span>Score:</span>
+                <span id="score">0</span>
             </div>
-
-            <div class="action-buttons">
-                <button id="verify-btn" class="action-button verify-btn">
-                    ⚡ Verify Attestation
-                </button>
-                <button id="propose-btn" class="action-button propose-btn">
-                    📜 Submit Proposal
-                </button>
-                <button id="leaderboard-btn" class="action-button leaderboard-btn">
-                    🏆 View Leaderboard
-                </button>
+            <div class="stat">
+                <span>Attestations:</span>
+                <span id="attestations">0</span>
             </div>
+            <div class="stat">
+                <span>Proposals:</span>
+                <span id="proposals">0</span>
+            </div>
+            <div class="stat">
+                <span>Lives:</span>
+                <span id="lives">3</span>
+            </div>
+            <div class="stat">
+                <span>Level:</span>
+                <span id="level">1</span>
+            </div>
+        </div>
 
-            <div id="game-messages" class="game-messages"></div>
-            <div id="leaderboard-section" class="leaderboard hidden"></div>
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div id="progress-fill" class="progress-fill"></div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <p><strong>Controls:</strong></p>
+            <p>SPACE - Jump</p>
+            <p>DOWN - Duck</p>
+            <p>Collect 🟢 for points</p>
+            <p>Avoid 🔴 enemies</p>
+        </div>
+
+        <!-- Game Over -->
+        <div id="game-over" class="game-over hidden">
+            <h2>Game Over!</h2>
+            <p>Final Score: <span id="final-score">0</span></p>
+            <p>Attestations: <span id="final-attestations">0</span></p>
+            <p>Proposals: <span id="final-proposals">0</span></p>
+            <button onclick="restartGame()" class="start-btn">Play Again</button>
         </div>
     </div>
 
     <script>
-        // Game API Class
-        class GameAPI {
+        class AztecRunnerGame {
             constructor() {
-                this.baseURL = 'https://aztecgame.duckdns.org/api';
-                this.token = localStorage.getItem('aztec-game-token');
-            }
-            
-            async request(endpoint, method = 'GET', data = null) {
-                const headers = { 'Content-Type': 'application/json' };
-                if (this.token) headers['Authorization'] = `Bearer ${this.token}`;
+                this.player = document.getElementById('player');
+                this.gameCanvas = document.querySelector('.game-canvas');
+                this.isJumping = false;
+                this.isDucking = false;
+                this.gameRunning = false;
+                this.score = 0;
+                this.attestations = 0;
+                this.proposals = 0;
+                this.lives = 3;
+                this.level = 1;
+                this.speed = 3;
+                this.spawnRate = 0.02;
+                this.username = '';
                 
-                const config = { method, headers, mode: 'cors' };
-                if (data) config.body = JSON.stringify(data);
+                this.obstacles = [];
+                this.collectibles = [];
+                this.enemies = [];
                 
-                try {
-                    const response = await fetch(`${this.baseURL}${endpoint}`, config);
-                    const result = await response.json();
-                    if (!response.ok) throw new Error(result.error || 'Request failed');
-                    return result;
-                } catch (error) {
-                    console.error('API Error:', error);
-                    throw error;
-                }
-            }
-            
-            async testConnection() {
-                return this.request('/health');
-            }
-            
-            async verifyTwitterUsername(username) {
-                return this.request('/twitter/verify-username', 'POST', { username });
-            }
-            
-            async getProfile() {
-                return this.request('/game/profile');
-            }
-            
-            async verifyAttestation() {
-                return this.request('/game/verify-attestation', 'POST', { 
-                    attestationData: 'aztec-arena-verification-' + Date.now()
-                });
-            }
-            
-            async submitProposal(content = 'Arena Governance Proposal') {
-                return this.request('/game/submit-proposal', 'POST', { 
-                    proposalContent: content + ' - ' + new Date().toISOString()
-                });
-            }
-            
-            async getLeaderboard() {
-                return this.request('/game/leaderboard');
-            }
-            
-            setToken(token) {
-                this.token = token;
-                localStorage.setItem('aztec-game-token', token);
-            }
-            
-            clearToken() {
-                this.token = null;
-                localStorage.removeItem('aztec-game-token');
-            }
-        }
-
-        // Game Logic
-        class AztecArenaGame {
-            constructor() {
-                this.api = new GameAPI();
-                this.currentUser = null;
-                this.cooldowns = { verification: 0, proposal: 0 };
                 this.init();
             }
             
-            async init() {
-                const token = localStorage.getItem('aztec-game-token');
-                if (token) {
-                    try {
-                        await this.loadUserProfile();
-                        this.showGameSection();
-                    } catch (error) {
-                        this.showLoginSection();
-                        this.api.clearToken();
-                    }
-                } else {
-                    this.showLoginSection();
-                }
-                
+            init() {
                 this.bindEvents();
-                this.startAnimations();
+                this.gameLoop();
             }
             
             bindEvents() {
-                document.getElementById('join-btn').addEventListener('click', () => this.handleLogin());
-                document.getElementById('twitter-username').addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') this.handleLogin();
+                document.getElementById('start-game-btn').addEventListener('click', () => {
+                    this.startGame();
                 });
-                document.getElementById('verify-btn').addEventListener('click', () => this.handleVerification());
-                document.getElementById('propose-btn').addEventListener('click', () => this.handleProposal());
-                document.getElementById('leaderboard-btn').addEventListener('click', () => this.showLeaderboard());
+                
+                document.getElementById('username-input').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.startGame();
+                });
+                
+                document.addEventListener('keydown', (e) => {
+                    if (!this.gameRunning) return;
+                    
+                    switch(e.code) {
+                        case 'Space':
+                            e.preventDefault();
+                            this.jump();
+                            break;
+                        case 'ArrowDown':
+                            this.duck();
+                            break;
+                    }
+                });
+                
+                document.addEventListener('keyup', (e) => {
+                    if (e.code === 'ArrowDown') {
+                        this.stopDuck();
+                    }
+                });
             }
             
-            async handleLogin() {
-                let username = document.getElementById('twitter-username').value.trim();
-                
-                // Remove @ symbol if present
-                if (username.startsWith('@')) {
-                    username = username.substring(1);
-                }
-                
+            startGame() {
+                const username = document.getElementById('username-input').value.trim();
                 if (!username) {
-                    this.showStatus('Please enter your Twitter username!', 'error');
+                    this.showMessage('Please enter your username!', 'error');
                     return;
                 }
                 
-                const joinBtn = document.getElementById('join-btn');
-                joinBtn.disabled = true;
-                joinBtn.textContent = '🔄 Connecting to Arena...';
+                this.username = username;
+                document.getElementById('login-overlay').classList.add('hidden');
+                this.gameRunning = true;
+                this.updateHUD();
+            }
+            
+            jump() {
+                if (this.isJumping) return;
                 
-                try {
-                    this.showStatus('🔗 Testing connection to arena...', 'info');
-                    await this.api.testConnection();
-                    
-                    this.showStatus('🐦 Verifying Twitter username...', 'info');
-                    const result = await this.api.verifyTwitterUsername(username);
-                    
-                    if (result.success) {
-                        this.api.setToken(result.token);
-                        this.currentUser = result.user;
-                        
-                        this.showStatus(`✅ ${result.message}`, 'success');
-                        
-                        setTimeout(() => {
-                            this.showGameSection();
-                            this.updateUserDisplay();
-                            this.updateStatsDisplay();
-                        }, 1500);
-                    }
-                } catch (error) {
-                    this.showStatus(`❌ ${error.message}`, 'error');
-                } finally {
-                    joinBtn.disabled = false;
-                    joinBtn.textContent = '🦅 Enter Arena';
-                }
-            }
-            
-            async handleVerification() {
-                if (!this.canPerformAction('verification')) return;
+                this.isJumping = true;
+                this.player.classList.add('jumping');
+                this.player.textContent = '🤸';
                 
-                const btn = document.getElementById('verify-btn');
-                btn.disabled = true;
-                btn.textContent = '⚡ Verifying...';
+                setTimeout(() => {
+                    this.isJumping = false;
+                    this.player.classList.remove('jumping');
+                    this.player.textContent = '🏃';
+                }, 600);
+            }
+            
+            duck() {
+                if (this.isDucking) return;
                 
-                try {
-                    const result = await this.api.verifyAttestation();
-                    this.currentUser.gameStats = result.newStats;
-                    
-                    this.addGameMessage(
-                        `${result.message} ${result.honk}`,
-                        result.success ? 'success' : 'error'
-                    );
-                    
-                    this.updateStatsDisplay();
-                    this.cooldowns.verification = Date.now() + 3000;
-                    
-                    if (result.success) this.createParticleEffect();
-                    
-                } catch (error) {
-                    this.addGameMessage(`❌ Verification failed: ${error.message}`, 'error');
-                } finally {
-                    setTimeout(() => {
-                        btn.disabled = false;
-                        btn.textContent = '⚡ Verify Attestation';
-                    }, 3000);
-                }
+                this.isDucking = true;
+                this.player.classList.add('ducking');
+                this.player.textContent = '🤽';
             }
             
-            async handleProposal() {
-                if (!this.canPerformAction('proposal')) return;
+            stopDuck() {
+                this.isDucking = false;
+                this.player.classList.remove('ducking');
+                this.player.textContent = '🏃';
+            }
+            
+            spawnObstacle() {
+                const obstacle = document.createElement('div');
+                obstacle.className = 'obstacle';
+                obstacle.textContent = '🔴';
+                obstacle.style.right = '-100px';
+                obstacle.style.animationDuration = (4 - this.speed * 0.5) + 's';
                 
-                const btn = document.getElementById('propose-btn');
-                btn.disabled = true;
-                btn.textContent = '📜 Submitting...';
+                this.gameCanvas.appendChild(obstacle);
+                this.obstacles.push(obstacle);
                 
-                try {
-                    const result = await this.api.submitProposal();
-                    this.currentUser.gameStats = result.newStats;
-                    
-                    this.addGameMessage(
-                        `${result.message} ${result.honk}`,
-                        'success'
-                    );
-                    
-                    this.updateStatsDisplay();
-                    this.cooldowns.proposal = Date.now() + 5000;
-                    this.createParticleEffect();
-                    
-                } catch (error) {
-                    this.addGameMessage(`❌ Proposal failed: ${error.message}`, 'error');
-                } finally {
-                    setTimeout(() => {
-                        btn.disabled = false;
-                        btn.textContent = '📜 Submit Proposal';
-                    }, 5000);
-                }
-            }
-            
-            async showLeaderboard() {
-                const leaderboardSection = document.getElementById('leaderboard-section');
-                
-                try {
-                    const result = await this.api.getLeaderboard();
-                    
-                    let html = `
-                        <h2>🏆 Arena Leaderboard</h2>
-                        <p>Total Warriors: ${result.totalPlayers}</p>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Rank</th>
-                                    <th>Warrior</th>
-                                    <th>Score</th>
-                                    <th>Honk Points</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                    `;
-                    
-                    result.leaderboard.forEach((player, index) => {
-                        const rank = index + 1;
-                        const trophy = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
-                        html += `
-                            <tr>
-                                <td>${trophy}</td>
-                                <td>@${player.twitterUsername}</td>
-                                <td>${player.gameStats.score}</td>
-                                <td>${player.gameStats.honkPoints}</td>
-                            </tr>
-                        `;
-                    });
-                    
-                    html += `
-                            </tbody>
-                        </table>
-                        <button onclick="document.getElementById('leaderboard-section').classList.add('hidden')" 
-                                class="aztec-button" style="margin-top: 20px;">Close</button>
-                    `;
-                    
-                    leaderboardSection.innerHTML = html;
-                    leaderboardSection.classList.remove('hidden');
-                    
-                } catch (error) {
-                    this.addGameMessage(`❌ Failed to load leaderboard: ${error.message}`, 'error');
-                }
-            }
-            
-            canPerformAction(action) {
-                const now = Date.now();
-                const cooldownTime = this.cooldowns[action];
-                
-                if (now < cooldownTime) {
-                    const remaining = Math.ceil((cooldownTime - now) / 1000);
-                    this.addGameMessage(`⏰ Wait ${remaining} seconds before next ${action}`, 'info');
-                    return false;
-                }
-                return true;
-            }
-            
-            async loadUserProfile() {
-                const result = await this.api.getProfile();
-                this.currentUser = {
-                    username: result.username,
-                    gameStats: result.gameStats,
-                    joinedAt: result.joinedAt
-                };
-            }
-            
-            showLoginSection() {
-                document.getElementById('login-section').classList.remove('hidden');
-                document.getElementById('game-section').classList.add('hidden');
-            }
-            
-            showGameSection() {
-                document.getElementById('login-section').classList.add('hidden');
-                document.getElementById('game-section').classList.remove('hidden');
-            }
-            
-            updateUserDisplay() {
-                const userProfile = document.getElementById('user-profile');
-                const profileImageUrl = `https://unavatar.io/twitter/${this.currentUser.username}`;
-                
-                userProfile.innerHTML = `
-                    <img src="${profileImageUrl}" alt="Profile" class="profile-image" 
-                         onerror="this.src='data:image/svg+xml,<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"60\\" height=\\"60\\"><circle cx=\\"30\\" cy=\\"30\\" r=\\"30\\" fill=\\"#D2691E\\"/><text x=\\"30\\" y=\\"35\\" text-anchor=\\"middle\\" fill=\\"white\\" font-size=\\"20\\">${this.currentUser.username[0].toUpperCase()}</text></svg>'">
-                    <div class="user-info">
-                        <h3>🦅 @${this.currentUser.username}</h3>
-                        <p>Arena Warrior since ${new Date(this.currentUser.joinedAt).toLocaleDateString()}</p>
-                    </div>
-                `;
-            }
-            
-            updateStatsDisplay() {
-                const statsGrid = document.getElementById('stats-grid');
-                const stats = this.currentUser.gameStats;
-                
-                statsGrid.innerHTML = `
-                    <div class="stat-card">
-                        <span class="stat-value">${stats.score}</span>
-                        <div class="stat-label">🏆 Arena Score</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-value">${stats.honkPoints}</span>
-                        <div class="stat-label">🎺 Honk Points</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-value">${stats.verificationsCompleted}</span>
-                        <div class="stat-label">⚡ Verifications</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-value">${stats.proposalsSubmitted}</span>
-                        <div class="stat-label">📜 Proposals</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-value">${stats.slashingEvents}</span>
-                        <div class="stat-label">💀 Slashed</div>
-                    </div>
-                `;
-            }
-            
-            addGameMessage(message, type = 'info') {
-                const messagesDiv = document.getElementById('game-messages');
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${type}`;
-                messageDiv.innerHTML = `
-                    <strong>${new Date().toLocaleTimeString()}</strong><br>
-                    ${message}
-                `;
-                
-                messagesDiv.appendChild(messageDiv);
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                
-                // Remove old messages
-                const messages = messagesDiv.querySelectorAll('.message');
-                if (messages.length > 10) {
-                    messages[0].remove();
-                }
-            }
-            
-            showStatus(message, type) {
-                const statusDiv = document.getElementById('login-status');
-                statusDiv.className = `status-message ${type}`;
-                statusDiv.textContent = message;
-            }
-            
-            createParticleEffect() {
-                for (let i = 0; i < 10; i++) {
-                    setTimeout(() => {
-                        const particle = document.createElement('div');
-                        particle.className = 'particle';
-                        particle.style.left = Math.random() * 100 + 'vw';
-                        particle.style.animationDelay = Math.random() * 2 + 's';
-                        document.body.appendChild(particle);
-                        
-                        setTimeout(() => particle.remove(), 3000);
-                    }, i * 100);
-                }
-            }
-            
-            startAnimations() {
-                // Create running characters periodically
-                setInterval(() => {
-                    this.createRunningCharacter();
-                }, 8000);
-                
-                // Background particles
-                setInterval(() => {
-                    if (Math.random() > 0.7) {
-                        this.createParticleEffect();
+                // Remove after animation
+                setTimeout(() => {
+                    if (obstacle.parentNode) {
+                        obstacle.parentNode.removeChild(obstacle);
+                        this.obstacles = this.obstacles.filter(o => o !== obstacle);
                     }
                 }, 5000);
             }
             
-            createRunningCharacter() {
-                const characters = ['🏃‍♂️', '🏃‍♀️', '🧙‍♂️', '🧙‍♀️', '⚔️', '🛡️'];
-                const character = document.createElement('div');
-                character.className = 'running-character';
-                character.textContent = characters[Math.floor(Math.random() * characters.length)];
-                character.style.top = Math.random() * 80 + '%';
-                character.style.left = '-50px';
+            spawnBlockchainEnemy() {
+                const enemy = document.createElement('div');
+                enemy.className = 'blockchain-enemy';
+                enemy.textContent = '⛓️';
+                enemy.style.right = '-100px';
+                enemy.style.animationDuration = (5 - this.speed * 0.3) + 's';
                 
-                document.body.appendChild(character);
+                this.gameCanvas.appendChild(enemy);
+                this.enemies.push(enemy);
                 
-                let position = -50;
-                const interval = setInterval(() => {
-                    position += 3;
-                    character.style.left = position + 'px';
-                    
-                    if (position > window.innerWidth) {
-                        clearInterval(interval);
-                        character.remove();
+                setTimeout(() => {
+                    if (enemy.parentNode) {
+                        enemy.parentNode.removeChild(enemy);
+                        this.enemies = this.enemies.filter(e => e !== enemy);
                     }
-                }, 50);
+                }, 6000);
+            }
+            
+            spawnCollectible() {
+                const collectible = document.createElement('div');
+                collectible.className = 'collectible';
+                
+                const types = ['🟢', '⚡', '📜'];
+                const type = types[Math.floor(Math.random() * types.length)];
+                collectible.textContent = type;
+                collectible.dataset.type = type;
+                
+                collectible.style.right = '-50px';
+                collectible.style.animationDuration = (4 - this.speed * 0.5) + 's';
+                
+                this.gameCanvas.appendChild(collectible);
+                this.collectibles.push(collectible);
+                
+                setTimeout(() => {
+                    if (collectible.parentNode) {
+                        collectible.parentNode.removeChild(collectible);
+                        this.collectibles = this.collectibles.filter(c => c !== collectible);
+                    }
+                }, 5000);
+            }
+            
+            checkCollisions() {
+                const playerRect = this.player.getBoundingClientRect();
+                
+                // Check obstacles and enemies
+                [...this.obstacles, ...this.enemies].forEach(element => {
+                    const elementRect = element.getBoundingClientRect();
+                    
+                    if (this.isColliding(playerRect, elementRect)) {
+                        this.handleDamage();
+                        element.parentNode.removeChild(element);
+                        this.obstacles = this.obstacles.filter(o => o !== element);
+                        this.enemies = this.enemies.filter(e => e !== element);
+                    }
+                });
+                
+                // Check collectibles
+                this.collectibles.forEach(collectible => {
+                    const collectibleRect = collectible.getBoundingClientRect();
+                    
+                    if (this.isColliding(playerRect, collectibleRect)) {
+                        this.handleCollectible(collectible);
+                        collectible.parentNode.removeChild(collectible);
+                        this.collectibles = this.collectibles.filter(c => c !== collectible);
+                    }
+                });
+            }
+            
+            isColliding(rect1, rect2) {
+                return !(rect1.right < rect2.left || 
+                        rect1.left > rect2.right || 
+                        rect1.bottom < rect2.top || 
+                        rect1.top > rect2.bottom);
+            }
+            
+            handleDamage() {
+                this.lives--;
+                this.showMessage('Hit by blockchain! -1 life', 'error');
+                
+                if (this.lives <= 0) {
+                    this.gameOver();
+                } else {
+                    this.player.style.filter = 'brightness(0.5)';
+                    setTimeout(() => {
+                        this.player.style.filter = 'brightness(1)';
+                    }, 500);
+                }
+                
+                this.updateHUD();
+            }
+            
+            handleCollectible(collectible) {
+                const type = collectible.dataset.type;
+                
+                switch(type) {
+                    case '🟢':
+                        this.score += 10;
+                        this.showMessage('+10 points!', 'success');
+                        break;
+                    case '⚡':
+                        this.attestations++;
+                        this.score += 25;
+                        this.showMessage('Attestation collected! +25 points', 'success');
+                        break;
+                    case '📜':
+                        this.proposals++;
+                        this.score += 50;
+                        this.showMessage('Proposal collected! +50 points', 'success');
+                        break;
+                }
+                
+                // Level up logic
+                if (this.score > this.level * 100) {
+                    this.level++;
+                    this.speed += 0.5;
+                    this.showMessage(`Level ${this.level}! Speed increased!`, 'success');
+                }
+                
+                this.updateHUD();
+            }
+            
+            showMessage(text, type = 'success') {
+                const message = document.createElement('div');
+                message.className = `message-popup ${type}`;
+                message.textContent = text;
+                
+                document.body.appendChild(message);
+                
+                setTimeout(() => {
+                    if (message.parentNode) {
+                        message.parentNode.removeChild(message);
+                    }
+                }, 2000);
+            }
+            
+            updateHUD() {
+                document.getElementById('score').textContent = this.score;
+                document.getElementById('attestations').textContent = this.attestations;
+                document.getElementById('proposals').textContent = this.proposals;
+                document.getElementById('lives').textContent = this.lives;
+                document.getElementById('level').textContent = this.level;
+                
+                // Update progress bar
+                const progress = (this.score % 100);
+                document.getElementById('progress-fill').style.width = progress + '%';
+            }
+            
+            gameOver() {
+                this.gameRunning = false;
+                
+                // Send final stats to backend
+                this.sendGameResults();
+                
+                document.getElementById('final-score').textContent = this.score;
+                document.getElementById('final-attestations').textContent = this.attestations;
+                document.getElementById('final-proposals').textContent = this.proposals;
+                document.getElementById('game-over').classList.remove('hidden');
+            }
+            
+            async sendGameResults() {
+                try {
+                    // Simulate API call to save game results
+                    const results = {
+                        username: this.username,
+                        score: this.score,
+                        attestations: this.attestations,
+                        proposals: this.proposals,
+                        level: this.level
+                    };
+                    
+                    console.log('Game results:', results);
+                    // You can connect this to your actual backend
+                    
+                } catch (error) {
+                    console.error('Failed to save game results:', error);
+                }
+            }
+            
+            gameLoop() {
+                if (!this.gameRunning) {
+                    requestAnimationFrame(() => this.gameLoop());
+                    return;
+                }
+                
+                // Spawn elements randomly
+                if (Math.random() < this.spawnRate) {
+                    this.spawnObstacle();
+                }
+                
+                if (Math.random() < this.spawnRate * 0.3) {
+                    this.spawnBlockchainEnemy();
+                }
+                
+                if (Math.random() < this.spawnRate * 0.8) {
+                    this.spawnCollectible();
+                }
+                
+                this.checkCollisions();
+                
+                requestAnimationFrame(() => this.gameLoop());
             }
         }
-
-        function showAbout() {
-            alert('Aztec Arena Game\n\nA decentralized gaming experience on the Aztec testnet.\nVerify attestations, submit proposals, and compete with other warriors!\n\nBuilt with privacy and fun in mind.');
+        
+        function restartGame() {
+            location.reload();
         }
-
-        // Initialize the game
-        new AztecArenaGame();
+        
+        // Initialize game
+        new AztecRunnerGame();
     </script>
 </body>
 </html>
