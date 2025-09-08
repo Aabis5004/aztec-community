@@ -649,23 +649,6 @@
             font-size: 0.85rem;
         }
 
-        .delete-btn {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            color: #ef4444;
-            border-radius: 8px;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .delete-btn:hover {
-            background: rgba(239, 68, 68, 0.4);
-            transform: scale(1.05);
-        }
-
         /* Floating Elements */
         .floating-element {
             position: fixed;
@@ -1098,35 +1081,9 @@
                         
                         <div class="member-footer">
                             <div class="join-date">Joined ${this.formatDate(member.joinedAt)}</div>
-                            <button class="delete-btn" onclick="communityWall.removeMember('${member._id}')" title="Remove member">
-                                Remove
-                            </button>
                         </div>
                     </div>
                 `).join('');
-            }
-
-            async removeMember(memberId) {
-                if (confirm('Are you sure you want to remove this privacy warrior?')) {
-                    try {
-                        const response = await fetch(`${this.baseURL}/wall/members/${memberId}`, {
-                            method: 'DELETE'
-                        });
-
-                        const data = await response.json();
-                        
-                        if (response.ok && data.success) {
-                            this.showStatus('Member removed from the Renaissance', 'success');
-                            await this.loadMembers();
-                            this.updateStats();
-                        } else {
-                            throw new Error(data.error || 'Failed to remove member');
-                        }
-                    } catch (error) {
-                        console.error('Error removing member:', error);
-                        this.showStatus('Failed to remove member', 'error');
-                    }
-                }
             }
 
             updateStats() {
