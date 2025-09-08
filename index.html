@@ -819,8 +819,8 @@
         <h1 class="hero-title">The Next<br>Renaissance</h1>
         <p class="hero-subtitle">Feast your eyes on</p>
         <p class="hero-description">
-            Aztec is the blockchain that mastered the privacy problem.<br>
-            Join our community of privacy warriors and share your story.
+            Aztec is the blockchain that mastered the privacy problem<br>
+            Join our community of privacy warriors and share your story
         </p>
         
         <div class="stats">
@@ -1173,7 +1173,8 @@
                 particle.style.fontSize = '2rem';
                 particle.style.pointerEvents = 'none';
                 particle.style.zIndex = '1000';
-                particle.textContent = ['✨', '🎉', '🌟', '💫', '⭐'][Math.floor(Math.random() * 5)];
+               const aztecSymbols = ['◆', '▲', '●', '■', '♦', '▼', '⬟', '⬢', '◈', '◇', '△', '▽'];
+               particle.textContent = aztecSymbols[Math.floor(Math.random() * aztecSymbols.length)];
                 
                 document.body.appendChild(particle);
                 
